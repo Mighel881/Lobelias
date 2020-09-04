@@ -52,6 +52,7 @@ NSString* customSongTitleYAxisValue = @"0.0";
 NSString* customSongTitleWidthValue = @"200.0";
 NSString* customSongTitleHeightValue = @"200.0";
 NSString* songTitleAlphaValue = @"1.0";
+NSString* songTitleCustomFontValue = @"";
 NSString* songTitleFontSizeValue = @"24.0";
 BOOL songTitleCustomColorSwitch = NO;
 
@@ -62,6 +63,7 @@ NSString* customArtistNameYAxisValue = @"0.0";
 NSString* customArtistNameWidthValue = @"200.0";
 NSString* customArtistNameHeightValue = @"200.0";
 NSString* artistNameAlphaValue = @"1.0";
+NSString* artistNameCustomFontValue = @"";
 NSString* artistNameFontSizeValue = @"19.0";
 BOOL artistNameShowArtistNameSwitch = YES;
 BOOL artistNameShowAlbumNameSwitch = YES;

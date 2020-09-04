@@ -99,9 +99,9 @@ UIVisualEffectView* blurView;
     }
 
     if ([specifier.properties[@"key"] isEqualToString:@"artistNameCustomColor"] && [value isEqual:@(NO)])
-	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:NO];
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:NO];
     else if ([specifier.properties[@"key"] isEqualToString:@"artistNameCustomColor"] && [value isEqual:@(YES)])
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:YES];
 
 }
 
@@ -238,9 +238,9 @@ UIVisualEffectView* blurView;
     }
 
     if ([[preferences objectForKey:@"artistNameCustomColor"] isEqual:@(YES)])
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:YES];
     else
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:NO];
 
 }
 

@@ -101,7 +101,10 @@ BOOL enableColorFlowSection;
         } else {
             [songTitleLabel setTextColor:[UIColor whiteColor]];
         }
-        [songTitleLabel setFont:[UIFont systemFontOfSize:[songTitleFontSizeValue doubleValue] weight:UIFontWeightSemibold]];
+        if ([songTitleCustomFontValue isEqualToString:@""])
+            [songTitleLabel setFont:[UIFont systemFontOfSize:[songTitleFontSizeValue doubleValue] weight:UIFontWeightSemibold]];
+        else
+            [songTitleLabel setFont:[UIFont fontWithName:songTitleCustomFontValue size:[songTitleFontSizeValue doubleValue]]];
         [songTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
         [songTitleLabel setHidden:YES];
@@ -123,7 +126,10 @@ BOOL enableColorFlowSection;
         } else {
             [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
         }
-        [artistNameLabel setFont:[UIFont systemFontOfSize:[artistNameFontSizeValue doubleValue]]];
+        if ([artistNameCustomFontValue isEqualToString:@""])
+            [artistNameLabel setFont:[UIFont systemFontOfSize:[artistNameFontSizeValue doubleValue]]];
+        else
+            [artistNameLabel setFont:[UIFont fontWithName:artistNameCustomFontValue size:[artistNameFontSizeValue doubleValue]]];
         [artistNameLabel setTextAlignment:NSTextAlignmentCenter];
         [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
         [artistNameLabel setHidden:YES];
@@ -538,6 +544,7 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&customSongTitleWidthValue default:@"200.0" forKey:@"customSongTitleWidth"];
         [preferences registerObject:&customSongTitleHeightValue default:@"200.0" forKey:@"customSongTitleHeight"];
         [preferences registerObject:&songTitleAlphaValue default:@"1.0" forKey:@"songTitleAlpha"];
+        [preferences registerObject:&songTitleCustomFontValue default:@"" forKey:@"songTitleCustomFont"];
         [preferences registerObject:&songTitleFontSizeValue default:@"24.0" forKey:@"songTitleFontSize"];
         [preferences registerBool:&songTitleCustomColorSwitch default:NO forKey:@"songTitleCustomColor"];
     }
@@ -550,6 +557,7 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&customArtistNameWidthValue default:@"200.0" forKey:@"customArtistNameWidth"];
         [preferences registerObject:&customArtistNameHeightValue default:@"200.0" forKey:@"customArtistNameHeight"];
         [preferences registerObject:&artistNameAlphaValue default:@"1.0" forKey:@"artistNameAlpha"];
+        [preferences registerObject:&artistNameCustomFontValue default:@"" forKey:@"artistNameCustomFont"];
         [preferences registerObject:&artistNameFontSizeValue default:@"19.0" forKey:@"artistNameFontSize"];
         [preferences registerBool:&artistNameShowArtistNameSwitch default:YES forKey:@"artistNameShowArtistName"];
         [preferences registerBool:&artistNameShowAlbumNameSwitch default:YES forKey:@"artistNameShowAlbumName"];

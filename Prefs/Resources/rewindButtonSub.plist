@@ -43,7 +43,7 @@
 			<key>min</key>
 			<real>-100.0</real>
 			<key>max</key>
-			<real>500.0</real>
+			<real>1000.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
@@ -69,7 +69,7 @@
 			<key>min</key>
 			<real>-100.0</real>
 			<key>max</key>
-			<real>800.0</real>
+			<real>1000.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
