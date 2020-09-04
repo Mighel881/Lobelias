@@ -55,6 +55,11 @@ NSString* songTitleAlphaValue = @"1.0";
 NSString* songTitleCustomFontValue = @"";
 NSString* songTitleFontSizeValue = @"24.0";
 BOOL songTitleCustomColorSwitch = NO;
+BOOL songTitleShadowSwitch = NO;
+NSString* songTitleShadowRadiusValue = @"0.0";
+NSString* songTitleShadowOpacityValue = @"0.0";
+NSString* songTitleShadowXValue = @"0.0";
+NSString* songTitleShadowYValue = @"0.0";
 
 // Artist Name
 BOOL customArtistNamePositionAndSizeSwitch = NO;
@@ -68,6 +73,11 @@ NSString* artistNameFontSizeValue = @"19.0";
 BOOL artistNameShowArtistNameSwitch = YES;
 BOOL artistNameShowAlbumNameSwitch = YES;
 BOOL artistNameCustomColorSwitch = NO;
+BOOL artistNameShadowSwitch = NO;
+NSString* artistNameShadowRadiusValue = @"0.0";
+NSString* artistNameShadowOpacityValue = @"0.0";
+NSString* artistNameShadowXValue = @"0.0";
+NSString* artistNameShadowYValue = @"0.0";
 
 // Rewind Button
 BOOL customRewindButtonPositionAndSizeSwitch = NO;

@@ -20,6 +20,7 @@
 - (void)setCellsHidden;
 - (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled;
 - (void)showColorpicker;
+- (void)showColorpicker2;
 @end
 
 @interface PSEditableTableCell (Interface)

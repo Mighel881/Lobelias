@@ -105,6 +105,13 @@ BOOL enableColorFlowSection;
             [songTitleLabel setFont:[UIFont systemFontOfSize:[songTitleFontSizeValue doubleValue] weight:UIFontWeightSemibold]];
         else
             [songTitleLabel setFont:[UIFont fontWithName:songTitleCustomFontValue size:[songTitleFontSizeValue doubleValue]]];
+        if (songTitleShadowSwitch) {
+            NSString* songTitleShadowColorHex = [preferencesDictionary objectForKey:@"songTitleShadowColor"];
+            [[songTitleLabel layer] setShadowColor:[LCPParseColorString(songTitleShadowColorHex, @"#000000:1.000000") CGColor]];
+            [[songTitleLabel layer] setShadowRadius:[songTitleShadowRadiusValue doubleValue]];
+            [[songTitleLabel layer] setShadowOpacity:[songTitleShadowOpacityValue doubleValue]];
+            [[songTitleLabel layer] setShadowOffset:CGSizeMake([songTitleShadowXValue doubleValue], [songTitleShadowYValue doubleValue])];
+        }
         [songTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
         [songTitleLabel setHidden:YES];
@@ -130,6 +137,13 @@ BOOL enableColorFlowSection;
             [artistNameLabel setFont:[UIFont systemFontOfSize:[artistNameFontSizeValue doubleValue]]];
         else
             [artistNameLabel setFont:[UIFont fontWithName:artistNameCustomFontValue size:[artistNameFontSizeValue doubleValue]]];
+        if (artistNameShadowSwitch) {
+            NSString* artistNameShadowColorHex = [preferencesDictionary objectForKey:@"artistNameShadowColor"];
+            [[artistNameLabel layer] setShadowColor:[LCPParseColorString(artistNameShadowColorHex, @"#000000:1.000000") CGColor]];
+            [[artistNameLabel layer] setShadowRadius:[artistNameShadowRadiusValue doubleValue]];
+            [[artistNameLabel layer] setShadowOpacity:[artistNameShadowOpacityValue doubleValue]];
+            [[artistNameLabel layer] setShadowOffset:CGSizeMake([artistNameShadowXValue doubleValue], [artistNameShadowYValue doubleValue])];
+        }
         [artistNameLabel setTextAlignment:NSTextAlignmentCenter];
         [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
         [artistNameLabel setHidden:YES];
@@ -547,6 +561,11 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&songTitleCustomFontValue default:@"" forKey:@"songTitleCustomFont"];
         [preferences registerObject:&songTitleFontSizeValue default:@"24.0" forKey:@"songTitleFontSize"];
         [preferences registerBool:&songTitleCustomColorSwitch default:NO forKey:@"songTitleCustomColor"];
+        [preferences registerBool:&songTitleShadowSwitch default:NO forKey:@"songTitleShadow"];
+        [preferences registerObject:&songTitleShadowRadiusValue default:@"0.0" forKey:@"songTitleShadowRadius"];
+        [preferences registerObject:&songTitleShadowOpacityValue default:@"0.0" forKey:@"songTitleShadowOpacity"];
+        [preferences registerObject:&songTitleShadowXValue default:@"0.0" forKey:@"songTitleShadowX"];
+        [preferences registerObject:&songTitleShadowYValue default:@"0.0" forKey:@"songTitleShadowY"];
     }
 
     // Artist Name
@@ -562,6 +581,11 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&artistNameShowArtistNameSwitch default:YES forKey:@"artistNameShowArtistName"];
         [preferences registerBool:&artistNameShowAlbumNameSwitch default:YES forKey:@"artistNameShowAlbumName"];
         [preferences registerBool:&artistNameCustomColorSwitch default:NO forKey:@"artistNameCustomColor"];
+        [preferences registerBool:&artistNameShadowSwitch default:NO forKey:@"artistNameShadow"];
+        [preferences registerObject:&artistNameShadowRadiusValue default:@"0.0" forKey:@"artistNameShadowRadius"];
+        [preferences registerObject:&artistNameShadowOpacityValue default:@"0.0" forKey:@"artistNameShadowOpacity"];
+        [preferences registerObject:&artistNameShadowXValue default:@"0.0" forKey:@"artistNameShadowX"];
+        [preferences registerObject:&artistNameShadowYValue default:@"0.0" forKey:@"artistNameShadowY"];
     }
 
     // Rewind Button
