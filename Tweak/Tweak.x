@@ -56,7 +56,12 @@ BOOL enableColorFlowSection;
         [lsArtworkImage setContentMode:UIViewContentModeScaleAspectFill];
         [lsArtworkImage setClipsToBounds:YES];
         [[lsArtworkImage layer] setCornerRadius:[artworkCornerRadiusValue doubleValue]];
-        [[lsArtworkImage layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        if (artworkBorderCustomColorSwitch) {
+            NSString* artworkBorderColorHex = [preferencesDictionary objectForKey:@"artworkBorderColor"];
+            [[lsArtworkImage layer] setBorderColor:[LCPParseColorString(artworkBorderColorHex, @"#ffffff:1.000000") CGColor]];
+        } else {
+            [[lsArtworkImage layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        }
         [[lsArtworkImage layer] setBorderWidth:[artworkBorderWidthValue doubleValue]];
         [lsArtworkImage setAdjustsImageWhenHighlighted:NO];
         [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
@@ -70,7 +75,12 @@ BOOL enableColorFlowSection;
         [pauseImage setClipsToBounds:YES];
         [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
         pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [pauseImage setTintColor:[UIColor whiteColor]];
+        if (pauseImageCustomColorSwitch) {
+            NSString* pauseImageColorHex = [preferencesDictionary objectForKey:@"pauseImageColor"];
+            [pauseImage setTintColor:LCPParseColorString(pauseImageColorHex, @"#ffffff:1.000000")];
+        } else {
+            [pauseImage setTintColor:[UIColor whiteColor]];
+        }
         [pauseImage setAlpha:0.0];
         [pauseImage setHidden:NO];
         if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
@@ -80,12 +90,17 @@ BOOL enableColorFlowSection;
         if (customSongTitlePositionAndSizeSwitch) {
             songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake([customSongTitleXAxisValue doubleValue], [customSongTitleYAxisValue doubleValue], [customSongTitleWidthValue doubleValue], [customSongTitleHeightValue doubleValue])];
         } else {
-            songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+            songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
             CGPoint songTitleCenter = [[self view] center];
             songTitleCenter.y = self.view.frame.size.height / 1.365;
             [songTitleLabel setCenter:songTitleCenter];
         }
-        [songTitleLabel setTextColor:[UIColor whiteColor]];
+        if (songTitleCustomColorSwitch) {
+            NSString* songTitleColorHex = [preferencesDictionary objectForKey:@"songTitleColor"];
+            [songTitleLabel setTextColor:LCPParseColorString(songTitleColorHex, @"#ffffff:1.000000")];
+        } else {
+            [songTitleLabel setTextColor:[UIColor whiteColor]];
+        }
         [songTitleLabel setFont:[UIFont systemFontOfSize:[songTitleFontSizeValue doubleValue] weight:UIFontWeightSemibold]];
         [songTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
@@ -97,12 +112,17 @@ BOOL enableColorFlowSection;
         if (customArtistNamePositionAndSizeSwitch) {
             artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake([customArtistNameXAxisValue doubleValue], [customArtistNameYAxisValue doubleValue], [customArtistNameWidthValue doubleValue], [customArtistNameHeightValue doubleValue])];
         } else {
-            artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+            artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
             CGPoint artistNameCenter = [[self view] center];
             artistNameCenter.y = self.view.frame.size.height / 1.3;
             [artistNameLabel setCenter:artistNameCenter];
         }
-        [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
+        if (artistNameCustomColorSwitch) {
+            NSString* artistNameColorHex = [preferencesDictionary objectForKey:@"artistNameColor"];
+            [artistNameLabel setTextColor:LCPParseColorString(artistNameColorHex, @"#ffffff:1.000000")];
+        } else {
+            [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
+        }
         [artistNameLabel setFont:[UIFont systemFontOfSize:[artistNameFontSizeValue doubleValue]]];
         [artistNameLabel setTextAlignment:NSTextAlignmentCenter];
         [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
@@ -120,9 +140,24 @@ BOOL enableColorFlowSection;
         [rewindButton setImage:rewindImage forState:UIControlStateNormal];
         [rewindButton setClipsToBounds:YES];
         [[rewindButton layer] setCornerRadius:[rewindButtonCornerRadiusValue doubleValue]];
-        [rewindButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
-        [rewindButton setTintColor:[UIColor whiteColor]];
-        [[rewindButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        if (rewindButtonBackgroundCustomColorSwitch) {
+            NSString* rewindButtonBackgroundColorHex = [preferencesDictionary objectForKey:@"rewindButtonBackgroundColor"];
+            [rewindButton setBackgroundColor:LCPParseColorString(rewindButtonBackgroundColorHex, @"#ffffff:1.000000")];
+        } else {
+            [rewindButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
+        }
+        if (rewindButtonCustomColorSwitch) {
+            NSString* rewindButtonColorHex = [preferencesDictionary objectForKey:@"rewindButtonColor"];
+            [rewindButton setTintColor:LCPParseColorString(rewindButtonColorHex, @"#ffffff:1.000000")];
+        } else {
+            [rewindButton setTintColor:[UIColor whiteColor]];
+        }
+        if (rewindButtonBorderCustomColorSwitch) {
+            NSString* rewindButtonBorderColorHex = [preferencesDictionary objectForKey:@"rewindButtonBorderColor"];
+            [[rewindButton layer] setBorderColor:[LCPParseColorString(rewindButtonBorderColorHex, @"#ffffff:1.000000") CGColor]];
+        } else {
+            [[rewindButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        }
         [[rewindButton layer] setBorderWidth:[rewindButtonBorderWidthValue doubleValue]];
         [rewindButton setAdjustsImageWhenHighlighted:NO];
         [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
@@ -140,9 +175,24 @@ BOOL enableColorFlowSection;
         [skipButton setImage:skipImage forState:UIControlStateNormal];
         [skipButton setClipsToBounds:YES];
         [[skipButton layer] setCornerRadius:[skipButtonCornerRadiusValue doubleValue]];
-        [skipButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
-        [skipButton setTintColor:[UIColor whiteColor]];
-        [[skipButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        if (skipButtonBackgroundCustomColorSwitch) {
+            NSString* skipButtonBackgroundColorHex = [preferencesDictionary objectForKey:@"skipButtonBackgroundColor"];
+            [skipButton setBackgroundColor:LCPParseColorString(skipButtonBackgroundColorHex, @"#ffffff:1.000000")];
+        } else {
+            [skipButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
+        }
+        if (skipButtonCustomColorSwitch) {
+            NSString* skipButtonColorHex = [preferencesDictionary objectForKey:@"skipButtonColor"];
+            [skipButton setTintColor:LCPParseColorString(skipButtonColorHex, @"#ffffff:1.000000")];
+        } else {
+            [skipButton setTintColor:[UIColor whiteColor]];
+        }
+        if (skipButtonBorderCustomColorSwitch) {
+            NSString* skipButtonBorderColorHex = [preferencesDictionary objectForKey:@"skipButtonBorderColor"];
+            [[skipButton layer] setBorderColor:[LCPParseColorString(skipButtonBorderColorHex, @"#ffffff:1.000000") CGColor]];
+        } else {
+            [[skipButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        }
         [[skipButton layer] setBorderWidth:[skipButtonBorderWidthValue doubleValue]];
         [skipButton setAdjustsImageWhenHighlighted:NO];
         [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
@@ -260,6 +310,11 @@ BOOL enableColorFlowSection;
             else if ([rewindButtonColorFlowColorValue intValue] == 1) [rewindButton setTintColor:primaryColor];
             else if ([rewindButtonColorFlowColorValue intValue] == 2) [rewindButton setTintColor:secondaryColor];
         }
+        if (rewindButtonBorderColorFlowSwitch) {
+            if ([rewindButtonBorderColorFlowColorValue intValue] == 0) [[rewindButton layer] setBorderColor:[backgroundColor CGColor]];
+            else if ([rewindButtonBorderColorFlowColorValue intValue] == 1) [[rewindButton layer] setBorderColor:[primaryColor CGColor]];
+            else if ([rewindButtonBorderColorFlowColorValue intValue] == 2) [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
+        }
         if (skipButtonBackgroundColorFlowSwitch) {
             if ([skipButtonBackgroundColorFlowColorValue intValue] == 0) [skipButton setBackgroundColor:backgroundColor];
             else if ([skipButtonBackgroundColorFlowColorValue intValue] == 1) [skipButton setBackgroundColor:primaryColor];
@@ -270,9 +325,22 @@ BOOL enableColorFlowSection;
             else if ([skipButtonColorFlowColorValue intValue] == 1) [skipButton setTintColor:primaryColor];
             else if ([skipButtonColorFlowColorValue intValue] == 2) [skipButton setTintColor:secondaryColor];
         }
+        if (skipButtonBorderColorFlowSwitch) {
+            if ([skipButtonBorderColorFlowColorValue intValue] == 0) [[skipButton layer] setBorderColor:[backgroundColor CGColor]];
+            else if ([skipButtonBorderColorFlowColorValue intValue] == 1) [[skipButton layer] setBorderColor:[primaryColor CGColor]];
+            else if ([skipButtonBorderColorFlowColorValue intValue] == 2) [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
+        }
     } else if ([notification.name isEqual:@"ColorFlowLockScreenColorReversionNotification"]) {
+        [[lsArtworkImage layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        [pauseImage setTintColor:[UIColor whiteColor]];
         [songTitleLabel setTextColor:[UIColor whiteColor]];
         [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
+        [rewindButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
+        [rewindButton setTintColor:[UIColor whiteColor]];
+        [[rewindButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+        [skipButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
+        [skipButton setTintColor:[UIColor whiteColor]];
+        [[skipButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
     }
 
 }
@@ -306,17 +374,9 @@ BOOL enableColorFlowSection;
 
 %end
 
-%hook SpringBoard
-
-- (void)applicationDidFinishLaunching:(id)arg1 { // reload data after a respring in case the user uses RoadRunner or Gump
-
-    %orig;
-
-    [[%c(SBMediaController) sharedInstance] setNowPlayingInfo:0];
-    
-}
-
 %end
+
+%group LobeliasData
 
 %hook SBMediaController
 
@@ -332,9 +392,9 @@ BOOL enableColorFlowSection;
             if (artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@ - %@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist], [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set artist and album name
             else if (artistNameShowArtistNameSwitch && !artistNameShowAlbumNameSwitch)
-                [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]]; // set artist and album name
+                [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]]; // set artist name
             else if (!artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
-                [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set artist and album name
+                [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set album name
             [lsArtworkBackgroundImageView setImage:currentArtwork];
             [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
             [lsArtworkBackgroundImageView setHidden:NO];
@@ -389,11 +449,56 @@ BOOL enableColorFlowSection;
 
 %end
 
+%hook SpringBoard
+
+- (void)applicationDidFinishLaunching:(id)arg1 { // reload data after a respring
+
+    %orig;
+
+    [[%c(SBMediaController) sharedInstance] setNowPlayingInfo:0];
+    
+}
+
+%end
+
+%end
+
+%group TweakCompatibility
+
+%hook CSCoverSheetViewController
+
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	[[lsArtworkBackgroundImageView layer] setCornerRadius:0];
+
+}
+
+%end
+
 %end
 
 %ctor {
 
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"love.litten.lobeliaspreferences"];
+    preferencesDictionary = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.lobeliaspreferences.plist"]];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
     [preferences registerBool:&enableBackgroundSection default:nil forKey:@"EnableBackgroundSection"];
@@ -421,6 +526,8 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&artworkAlphaValue default:@"1.0" forKey:@"artworkAlpha"];
         [preferences registerObject:&artworkCornerRadiusValue default:@"115.0" forKey:@"artworkCornerRadius"];
         [preferences registerObject:&artworkBorderWidthValue default:@"4.0" forKey:@"artworkBorderWidth"];
+        [preferences registerBool:&artworkBorderCustomColorSwitch default:NO forKey:@"artworkBorderCustomColor"];
+        [preferences registerBool:&pauseImageCustomColorSwitch default:NO forKey:@"pauseImageCustomColor"];
     }
 
     // Song Title
@@ -432,6 +539,7 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&customSongTitleHeightValue default:@"200.0" forKey:@"customSongTitleHeight"];
         [preferences registerObject:&songTitleAlphaValue default:@"1.0" forKey:@"songTitleAlpha"];
         [preferences registerObject:&songTitleFontSizeValue default:@"24.0" forKey:@"songTitleFontSize"];
+        [preferences registerBool:&songTitleCustomColorSwitch default:NO forKey:@"songTitleCustomColor"];
     }
 
     // Artist Name
@@ -445,6 +553,7 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&artistNameFontSizeValue default:@"19.0" forKey:@"artistNameFontSize"];
         [preferences registerBool:&artistNameShowArtistNameSwitch default:YES forKey:@"artistNameShowArtistName"];
         [preferences registerBool:&artistNameShowAlbumNameSwitch default:YES forKey:@"artistNameShowAlbumName"];
+        [preferences registerBool:&artistNameCustomColorSwitch default:NO forKey:@"artistNameCustomColor"];
     }
 
     // Rewind Button
@@ -457,6 +566,9 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&rewindButtonAlphaValue default:@"1.0" forKey:@"rewindButtonAlpha"];
         [preferences registerObject:&rewindButtonCornerRadiusValue default:@"27.5" forKey:@"rewindButtonCornerRadius"];
         [preferences registerObject:&rewindButtonBorderWidthValue default:@"0.0" forKey:@"rewindButtonBorderWidth"];
+        [preferences registerBool:&rewindButtonBackgroundCustomColorSwitch default:NO forKey:@"rewindButtonBackgroundCustomColor"];
+        [preferences registerBool:&rewindButtonCustomColorSwitch default:NO forKey:@"rewindButtonCustomColor"];
+        [preferences registerBool:&rewindButtonBorderCustomColorSwitch default:NO forKey:@"rewindButtonBorderCustomColor"];
     }
 
     // Skip Button
@@ -469,6 +581,9 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&skipButtonAlphaValue default:@"1.0" forKey:@"skipButtonAlpha"];
         [preferences registerObject:&skipButtonCornerRadiusValue default:@"27.5" forKey:@"skipButtonCornerRadius"];
         [preferences registerObject:&skipButtonBorderWidthValue default:@"0.0" forKey:@"skipButtonBorderWidth"];
+        [preferences registerBool:&skipButtonBackgroundCustomColorSwitch default:NO forKey:@"skipButtonBackgroundCustomColor"];
+        [preferences registerBool:&skipButtonCustomColorSwitch default:NO forKey:@"skipButtonCustomColor"];
+        [preferences registerBool:&skipButtonBorderCustomColorSwitch default:NO forKey:@"skipButtonBorderCustomColor"];
     }
 
     // ColorFlow
@@ -485,14 +600,20 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&rewindButtonBackgroundColorFlowColorValue default:@"0" forKey:@"rewindButtonBackgroundColorFlowColor"];
         [preferences registerBool:&rewindButtonColorFlowSwitch default:NO forKey:@"rewindButtonColorFlow"];
         [preferences registerObject:&rewindButtonColorFlowColorValue default:@"1" forKey:@"rewindButtonColorFlowColor"];
+        [preferences registerBool:&rewindButtonBorderColorFlowSwitch default:NO forKey:@"rewindButtonBorderColorFlow"];
+        [preferences registerObject:&rewindButtonBorderColorFlowColorValue default:@"2" forKey:@"rewindButtonBorderColorFlowColor"];
         [preferences registerBool:&skipButtonBackgroundColorFlowSwitch default:NO forKey:@"skipButtonBackgroundColorFlow"];
         [preferences registerObject:&skipButtonBackgroundColorFlowColorValue default:@"0" forKey:@"skipButtonBackgroundColorFlowColor"];
         [preferences registerBool:&skipButtonColorFlowSwitch default:NO forKey:@"skipButtonColorFlow"];
         [preferences registerObject:&skipButtonColorFlowColorValue default:@"1" forKey:@"skipButtonColorFlowColor"];
+        [preferences registerBool:&skipButtonBorderColorFlowSwitch default:NO forKey:@"skipButtonBorderColorFlow"];
+        [preferences registerObject:&skipButtonBorderColorFlowColorValue default:@"2" forKey:@"skipButtonBorderColorFlowColor"];
     }
 
 	if (enabled) {
         %init(Lobelias);
+        %init(LobeliasData);
+        if (enableBackgroundSection && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"]) %init(TweakCompatibility);
         return;
     }
 

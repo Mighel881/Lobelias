@@ -5,4 +5,4 @@
 2. Install Lobelias
 
 ## Compiling
-No dependencies, just make package (make clean package)
+Depends on libcolorpicker, then just make package (make clean package)

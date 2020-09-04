@@ -1,8 +1,10 @@
 #import <UIKit/UIKit.h>
 #import <Cephei/HBPreferences.h>
 #import <MediaRemote/MediaRemote.h>
+#import "libcolorpicker.h"
 
 HBPreferences* preferences;
+NSDictionary *preferencesDictionary;
 
 extern BOOL enabled;
 extern BOOL enableBackgroundSection;
@@ -40,6 +42,8 @@ NSString* customArtworkHeightValue = @"230.0";
 NSString* artworkAlphaValue = @"1.0";
 NSString* artworkCornerRadiusValue = @"115.0";
 NSString* artworkBorderWidthValue = @"4.0";
+BOOL artworkBorderCustomColorSwitch = NO;
+BOOL pauseImageCustomColorSwitch = NO;
 
 // Song Title
 BOOL customSongTitlePositionAndSizeSwitch = NO;
@@ -49,6 +53,7 @@ NSString* customSongTitleWidthValue = @"200.0";
 NSString* customSongTitleHeightValue = @"200.0";
 NSString* songTitleAlphaValue = @"1.0";
 NSString* songTitleFontSizeValue = @"24.0";
+BOOL songTitleCustomColorSwitch = NO;
 
 // Artist Name
 BOOL customArtistNamePositionAndSizeSwitch = NO;
@@ -60,6 +65,7 @@ NSString* artistNameAlphaValue = @"1.0";
 NSString* artistNameFontSizeValue = @"19.0";
 BOOL artistNameShowArtistNameSwitch = YES;
 BOOL artistNameShowAlbumNameSwitch = YES;
+BOOL artistNameCustomColorSwitch = NO;
 
 // Rewind Button
 BOOL customRewindButtonPositionAndSizeSwitch = NO;
@@ -70,6 +76,9 @@ NSString* customRewindButtonHeightValue = @"55.0";
 NSString* rewindButtonAlphaValue = @"1.0";
 NSString* rewindButtonCornerRadiusValue = @"27.5";
 NSString* rewindButtonBorderWidthValue = @"0.0";
+BOOL rewindButtonBackgroundCustomColorSwitch = NO;
+BOOL rewindButtonCustomColorSwitch = NO;
+BOOL rewindButtonBorderCustomColorSwitch = NO;
 
 // Skip Button
 BOOL customSkipButtonPositionAndSizeSwitch = NO;
@@ -80,6 +89,9 @@ NSString* customSkipButtonHeightValue = @"55.0";
 NSString* skipButtonAlphaValue = @"1.0";
 NSString* skipButtonCornerRadiusValue = @"27.5";
 NSString* skipButtonBorderWidthValue = @"0.0";
+BOOL skipButtonBackgroundCustomColorSwitch = NO;
+BOOL skipButtonCustomColorSwitch = NO;
+BOOL skipButtonBorderCustomColorSwitch = NO;
 
 // ColorFlow
 BOOL pauseButtonColorFlowSwitch = NO;
@@ -94,10 +106,14 @@ BOOL rewindButtonBackgroundColorFlowSwitch = NO;
 NSString* rewindButtonBackgroundColorFlowColorValue = @"0";
 BOOL rewindButtonColorFlowSwitch = NO;
 NSString* rewindButtonColorFlowColorValue = @"1";
+BOOL rewindButtonBorderColorFlowSwitch = NO;
+NSString* rewindButtonBorderColorFlowColorValue = @"2";
 BOOL skipButtonBackgroundColorFlowSwitch = NO;
 NSString* skipButtonBackgroundColorFlowColorValue = @"0";
 BOOL skipButtonColorFlowSwitch = NO;
 NSString* skipButtonColorFlowColorValue = @"1";
+BOOL skipButtonBorderColorFlowSwitch = NO;
+NSString* skipButtonBorderColorFlowColorValue = @"2";
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)rewindSong;

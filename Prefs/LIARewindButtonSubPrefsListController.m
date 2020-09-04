@@ -98,6 +98,21 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:YES];
     }
 
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundCustomColor"] && [value isEqual:@(NO)])
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:NO];
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundCustomColor"] && [value isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:YES];
+
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonCustomColor"] && [value isEqual:@(NO)])
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:NO];
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonCustomColor"] && [value isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:YES];
+
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderCustomColor"] && [value isEqual:@(NO)])
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:NO];
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderCustomColor"] && [value isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:YES];
+
 }
 
 - (void)toggleState {
@@ -188,6 +203,13 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:YES];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:14 inSection:0] enabled:YES];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:15 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:17 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:21 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:YES];
         [self setCellsHidden];
     } else {
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] enabled:NO];
@@ -206,6 +228,13 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:NO];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:14 inSection:0] enabled:NO];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:15 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:17 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:21 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:NO];
     }
 
 }
@@ -226,6 +255,21 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:NO];
     }
 
+    if ([[preferences objectForKey:@"rewindButtonBackgroundCustomColor"] isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:YES];
+    else
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:18 inSection:0] enabled:NO];
+
+    if ([[preferences objectForKey:@"rewindButtonCustomColor"] isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:YES];
+    else
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:20 inSection:0] enabled:NO];
+
+    if ([[preferences objectForKey:@"rewindButtonBorderCustomColor"] isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:YES];
+    else
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:NO];
+
 }
 
 - (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled {
@@ -245,6 +289,48 @@ UIVisualEffectView* blurView;
             ((UITextField*)[editableCell textField]).alpha = enabled ? 1 : 0.4;
         }
     }
+
+}
+
+- (void)showColorpicker {
+
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
+    UIColor* startColor = LCPParseColorString(@"rewindButtonBackgroundColor", @"#ffffff:1.000000");
+    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
+
+    [alert displayWithCompletion:^void (UIColor* pickedColor) {
+        NSString* hexString = [UIColor hexFromColor:pickedColor];
+        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
+        [preferences setObject:hexString forKey:@"rewindButtonBackgroundColor"];
+    }];
+
+}
+
+- (void)showColorpicker2 {
+
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
+    UIColor* startColor = LCPParseColorString(@"rewindButtonColor", @"#ffffff:1.000000");
+    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
+
+    [alert displayWithCompletion:^void (UIColor* pickedColor) {
+        NSString* hexString = [UIColor hexFromColor:pickedColor];
+        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
+        [preferences setObject:hexString forKey:@"rewindButtonColor"];
+    }];
+
+}
+
+- (void)showColorpicker3 {
+
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
+    UIColor* startColor = LCPParseColorString(@"rewindButtonBorderColor", @"#ffffff:1.000000");
+    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
+
+    [alert displayWithCompletion:^void (UIColor* pickedColor) {
+        NSString* hexString = [UIColor hexFromColor:pickedColor];
+        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
+        [preferences setObject:hexString forKey:@"rewindButtonBorderColor"];
+    }];
 
 }
 

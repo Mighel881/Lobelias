@@ -286,6 +286,53 @@
 			<key>PostNotification</key>
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
+		
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Rewind Button Border</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>rewindButtonBorderColorFlow</string>
+			<key>label</key>
+			<string>Use ColorFlow Colors</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>2</integer>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>rewindButtonBorderColorFlowColor</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Background</string>
+				<string>Primary</string>
+				<string>Secondary</string>
+			</array>
+			<key>alignment</key>
+			<string>3</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
 
 		<dict>
 			<key>cell</key>
@@ -363,6 +410,53 @@
 			<string>love.litten.lobeliaspreferences</string>
 			<key>key</key>
 			<string>skipButtonColorFlowColor</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Background</string>
+				<string>Primary</string>
+				<string>Secondary</string>
+			</array>
+			<key>alignment</key>
+			<string>3</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Skip Button Border</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>skipButtonBorderColorFlow</string>
+			<key>label</key>
+			<string>Use ColorFlow Colors</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>2</integer>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>skipButtonBorderColorFlowColor</string>
 			<key>validValues</key>
 			<array>
 				<integer>0</integer>
