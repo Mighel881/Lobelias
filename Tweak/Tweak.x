@@ -17,6 +17,7 @@ BOOL enableColorFlowSection;
 
 	%orig;
 
+    // background
 	if (!lsArtworkBackgroundImageView && enableBackgroundSection) {
         lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
         [lsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -27,6 +28,7 @@ BOOL enableColorFlowSection;
         if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]]) [[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
     }
     
+    // background blur
     if (!lsBlur && [backgroundBlurValue intValue] != 0 && enableBackgroundSection) {
         if ([backgroundBlurValue intValue] == 1)
             lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
@@ -43,6 +45,7 @@ BOOL enableColorFlowSection;
         if (![lsBlurView isDescendantOfView:lsArtworkBackgroundImageView]) [lsArtworkBackgroundImageView addSubview:lsBlurView];
     }
     
+    // artwork
     if (!lsArtworkImage && enableArtworkSection) {
         if (customArtworkPositionAndSizeSwitch) {
             lsArtworkImage = [[UIButton alloc] initWithFrame:CGRectMake([customArtworkXAxisValue doubleValue], [customArtworkYAxisValue doubleValue], [customArtworkWidthValue doubleValue], [customArtworkHeightValue doubleValue])];
@@ -69,6 +72,7 @@ BOOL enableColorFlowSection;
         if (![lsArtworkImage isDescendantOfView:lsArtworkBackgroundImageView]) [[self view] addSubview:lsArtworkImage];
     }
     
+    // pause image
     if (!pauseImage) {
         pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
         [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
@@ -86,6 +90,7 @@ BOOL enableColorFlowSection;
         if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
     }
     
+    // song title
     if (!songTitleLabel && enableSongTitleSection) {
         if (customSongTitlePositionAndSizeSwitch) {
             songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake([customSongTitleXAxisValue doubleValue], [customSongTitleYAxisValue doubleValue], [customSongTitleWidthValue doubleValue], [customSongTitleHeightValue doubleValue])];
@@ -118,6 +123,7 @@ BOOL enableColorFlowSection;
         if (![songTitleLabel isDescendantOfView:[self view]]) [[self view] addSubview:songTitleLabel];
     }
     
+    // artist name & album title
     if (!artistNameLabel && enableArtistNameSection) {
         if (customArtistNamePositionAndSizeSwitch) {
             artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake([customArtistNameXAxisValue doubleValue], [customArtistNameYAxisValue doubleValue], [customArtistNameWidthValue doubleValue], [customArtistNameHeightValue doubleValue])];
@@ -150,6 +156,7 @@ BOOL enableColorFlowSection;
         if (![artistNameLabel isDescendantOfView:[self view]]) [[self view] addSubview:artistNameLabel];
     }
     
+    // rewind button
     if (!rewindButton && enableRewindButtonSection) {
         if (customRewindButtonPositionAndSizeSwitch)
             rewindButton = [[UIButton alloc] initWithFrame:CGRectMake([customRewindButtonXAxisValue doubleValue], [customRewindButtonYAxisValue doubleValue], [customRewindButtonWidthValue doubleValue], [customRewindButtonHeightValue doubleValue])];
@@ -185,6 +192,7 @@ BOOL enableColorFlowSection;
         if (![rewindButton isDescendantOfView:[self view]]) [[self view] addSubview:rewindButton];
     }
     
+    // skip button
     if (!skipButton && enableSkipButtonSection) {
         if (customSkipButtonPositionAndSizeSwitch)
             skipButton = [[UIButton alloc] initWithFrame:CGRectMake([customSkipButtonXAxisValue doubleValue], [customSkipButtonYAxisValue doubleValue], [customSkipButtonWidthValue doubleValue], [customSkipButtonHeightValue doubleValue])];
@@ -258,7 +266,7 @@ BOOL enableColorFlowSection;
 	[[%c(SBMediaController) sharedInstance] togglePlayPauseForEventSource:0];
 
     if (![[%c(SBMediaController) sharedInstance] isPaused]) {
-        [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image animation
+        [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
             [pauseImage setAlpha:1.0];
             pauseImage.transform = CGAffineTransformMakeScale(1.0, 1.0);
         } completion:nil];
@@ -266,7 +274,7 @@ BOOL enableColorFlowSection;
             [pauseImage setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.4]];
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image animation
+        [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
             [pauseImage setAlpha:0.0];
             pauseImage.transform = CGAffineTransformMakeScale(0.9, 0.9);
         } completion:^(BOOL finished) {
@@ -306,9 +314,9 @@ BOOL enableColorFlowSection;
 
 %hook CSAdjunctItemView
 
-- (void)setHidden:(BOOL)hidden { // hide the original player, i could have completely removed it but colorflow support would be broken then
+- (id)initWithFrame:(CGRect)frame { // remove original player
 
-    %orig(YES);
+    return nil;
 
 }
 
