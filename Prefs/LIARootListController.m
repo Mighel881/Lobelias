@@ -116,9 +116,6 @@ UIImage* currentArtwork;
         [blurView setAlpha:0.0];
     } completion:nil];
 
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/ColorFlow5.dylib"])
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:NO];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {

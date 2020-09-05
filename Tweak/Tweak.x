@@ -220,12 +220,6 @@ BOOL enableColorFlowSection;
         if (![skipButton isDescendantOfView:[self view]]) [[self view] addSubview:skipButton];
     }
 
-    // register colorflow notification observers
-    if (enableColorFlowSection) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveColorNotification:) name:@"ColorFlowLockScreenColorReversionNotification" object:nil];
-	    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveColorNotification:) name:@"ColorFlowLockScreenColorizationNotification" object:nil];
-    }
-
 }
 
 %new
@@ -289,91 +283,6 @@ BOOL enableColorFlowSection;
             lsArtworkImage.transform = CGAffineTransformMakeScale(1, 1);
         } completion:nil];
     }];
-
-}
-
-%new
-- (void)receiveColorNotification:(NSNotification *)notification { // apply colorflow colors
-
-    if ([notification.name isEqual:@"ColorFlowLockScreenColorizationNotification"]) {
-        NSDictionary* userInfo = [notification userInfo];
-        UIColor* backgroundColor = userInfo[@"BackgroundColor"];
-		UIColor* primaryColor = userInfo[@"PrimaryColor"];
-		UIColor* secondaryColor = userInfo[@"SecondaryColor"];
-        if (pauseButtonColorFlowSwitch) {
-            if ([pauseButtonColorFlowColorValue intValue] == 0) [pauseImage setTintColor:backgroundColor];
-            else if ([pauseButtonColorFlowColorValue intValue] == 1) [pauseImage setTintColor:primaryColor];
-            else if ([pauseButtonColorFlowColorValue intValue] == 2) [pauseImage setTintColor:secondaryColor];
-        }
-        if (artworkBorderColorFlowSwitch) {
-            if ([artworkBorderColorFlowColorValue intValue] == 0) [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
-            else if ([artworkBorderColorFlowColorValue intValue] == 1) [[lsArtworkImage layer] setBorderColor:[primaryColor CGColor]];
-            else if ([artworkBorderColorFlowColorValue intValue] == 2) [[lsArtworkImage layer] setBorderColor:[secondaryColor CGColor]];
-        }
-        if (songTitleColorFlowSwitch) {
-            if ([songTitleColorFlowColorValue intValue] == 0) [songTitleLabel setTextColor:backgroundColor];
-            else if ([songTitleColorFlowColorValue intValue] == 1) [songTitleLabel setTextColor:primaryColor];
-            else if ([songTitleColorFlowColorValue intValue] == 2) [songTitleLabel setTextColor:secondaryColor];
-        }
-        if (songTitleShadowColorFlowSwitch) {
-            if ([songTitleShadowColorFlowColorValue intValue] == 0) [[songTitleLabel layer] setShadowColor:[backgroundColor CGColor]];
-            else if ([songTitleShadowColorFlowColorValue intValue] == 1) [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
-            else if ([songTitleShadowColorFlowColorValue intValue] == 2) [[songTitleLabel layer] setShadowColor:[secondaryColor CGColor]];
-        }
-        if (artistNameColorFlowSwitch) {
-            if ([artistNameColorFlowColorValue intValue] == 0) [artistNameLabel setTextColor:backgroundColor];
-            else if ([artistNameColorFlowColorValue intValue] == 1) [artistNameLabel setTextColor:primaryColor];
-            else if ([artistNameColorFlowColorValue intValue] == 2) [artistNameLabel setTextColor:secondaryColor];
-        }
-        if (artistNameShadowColorFlowSwitch) {
-            if ([artistNameShadowColorFlowColorValue intValue] == 0) [[artistNameLabel layer] setShadowColor:[backgroundColor CGColor]];
-            else if ([artistNameShadowColorFlowColorValue intValue] == 1) [[artistNameLabel layer] setShadowColor:[primaryColor CGColor]];
-            else if ([artistNameShadowColorFlowColorValue intValue] == 2) [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
-        }
-        if (rewindButtonBackgroundColorFlowSwitch) {
-            if ([rewindButtonBackgroundColorFlowColorValue intValue] == 0) [rewindButton setBackgroundColor:backgroundColor];
-            else if ([rewindButtonBackgroundColorFlowColorValue intValue] == 1) [rewindButton setBackgroundColor:primaryColor];
-            else if ([rewindButtonBackgroundColorFlowColorValue intValue] == 2) [rewindButton setBackgroundColor:secondaryColor];
-        }
-        if (rewindButtonColorFlowSwitch) {
-            if ([rewindButtonColorFlowColorValue intValue] == 0) [rewindButton setTintColor:backgroundColor];
-            else if ([rewindButtonColorFlowColorValue intValue] == 1) [rewindButton setTintColor:primaryColor];
-            else if ([rewindButtonColorFlowColorValue intValue] == 2) [rewindButton setTintColor:secondaryColor];
-        }
-        if (rewindButtonBorderColorFlowSwitch) {
-            if ([rewindButtonBorderColorFlowColorValue intValue] == 0) [[rewindButton layer] setBorderColor:[backgroundColor CGColor]];
-            else if ([rewindButtonBorderColorFlowColorValue intValue] == 1) [[rewindButton layer] setBorderColor:[primaryColor CGColor]];
-            else if ([rewindButtonBorderColorFlowColorValue intValue] == 2) [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
-        }
-        if (skipButtonBackgroundColorFlowSwitch) {
-            if ([skipButtonBackgroundColorFlowColorValue intValue] == 0) [skipButton setBackgroundColor:backgroundColor];
-            else if ([skipButtonBackgroundColorFlowColorValue intValue] == 1) [skipButton setBackgroundColor:primaryColor];
-            else if ([skipButtonBackgroundColorFlowColorValue intValue] == 2) [skipButton setBackgroundColor:secondaryColor];
-        }
-        if (skipButtonColorFlowSwitch) {
-            if ([skipButtonColorFlowColorValue intValue] == 0) [skipButton setTintColor:backgroundColor];
-            else if ([skipButtonColorFlowColorValue intValue] == 1) [skipButton setTintColor:primaryColor];
-            else if ([skipButtonColorFlowColorValue intValue] == 2) [skipButton setTintColor:secondaryColor];
-        }
-        if (skipButtonBorderColorFlowSwitch) {
-            if ([skipButtonBorderColorFlowColorValue intValue] == 0) [[skipButton layer] setBorderColor:[backgroundColor CGColor]];
-            else if ([skipButtonBorderColorFlowColorValue intValue] == 1) [[skipButton layer] setBorderColor:[primaryColor CGColor]];
-            else if ([skipButtonBorderColorFlowColorValue intValue] == 2) [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
-        }
-    } else if ([notification.name isEqual:@"ColorFlowLockScreenColorReversionNotification"]) {
-        [[lsArtworkImage layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-        [pauseImage setTintColor:[UIColor whiteColor]];
-        [songTitleLabel setTextColor:[UIColor whiteColor]];
-        [[songTitleLabel layer] setShadowColor:[[UIColor whiteColor] CGColor]];
-        [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
-        [[artistNameLabel layer] setShadowColor:[[UIColor whiteColor] CGColor]];
-        [rewindButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
-        [rewindButton setTintColor:[UIColor whiteColor]];
-        [[rewindButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-        [skipButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
-        [skipButton setTintColor:[UIColor whiteColor]];
-        [[skipButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-    }
 
 }
 
@@ -647,34 +556,6 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&skipButtonBackgroundCustomColorSwitch default:NO forKey:@"skipButtonBackgroundCustomColor"];
         [preferences registerBool:&skipButtonCustomColorSwitch default:NO forKey:@"skipButtonCustomColor"];
         [preferences registerBool:&skipButtonBorderCustomColorSwitch default:NO forKey:@"skipButtonBorderCustomColor"];
-    }
-
-    // ColorFlow
-    if (enableColorFlowSection) {
-        [preferences registerBool:&pauseButtonColorFlowSwitch default:NO forKey:@"pauseButtonColorFlow"];
-        [preferences registerObject:&pauseButtonColorFlowColorValue default:@"2" forKey:@"pauseButtonColorFlowColor"];
-        [preferences registerBool:&artworkBorderColorFlowSwitch default:NO forKey:@"artworkBorderColorFlow"];
-        [preferences registerObject:&artworkBorderColorFlowColorValue default:@"0" forKey:@"artworkBorderColorFlowColor"];
-        [preferences registerBool:&songTitleColorFlowSwitch default:NO forKey:@"songTitleColorFlow"];
-        [preferences registerObject:&songTitleColorFlowColorValue default:@"1" forKey:@"songTitleColorFlowColor"];
-        [preferences registerBool:&songTitleShadowColorFlowSwitch default:NO forKey:@"songTitleShadowColorFlow"];
-        [preferences registerObject:&songTitleShadowColorFlowColorValue default:@"1" forKey:@"songTitleShadowColorFlowColor"];
-        [preferences registerBool:&artistNameColorFlowSwitch default:NO forKey:@"artistNameColorFlow"];
-        [preferences registerObject:&artistNameColorFlowColorValue default:@"2" forKey:@"artistNameColorFlowColor"];
-        [preferences registerBool:&artistNameShadowColorFlowSwitch default:NO forKey:@"artistNameShadowColorFlow"];
-        [preferences registerObject:&artistNameShadowColorFlowColorValue default:@"2" forKey:@"artistNameShadowColorFlowColor"];
-        [preferences registerBool:&rewindButtonBackgroundColorFlowSwitch default:NO forKey:@"rewindButtonBackgroundColorFlow"];
-        [preferences registerObject:&rewindButtonBackgroundColorFlowColorValue default:@"0" forKey:@"rewindButtonBackgroundColorFlowColor"];
-        [preferences registerBool:&rewindButtonColorFlowSwitch default:NO forKey:@"rewindButtonColorFlow"];
-        [preferences registerObject:&rewindButtonColorFlowColorValue default:@"1" forKey:@"rewindButtonColorFlowColor"];
-        [preferences registerBool:&rewindButtonBorderColorFlowSwitch default:NO forKey:@"rewindButtonBorderColorFlow"];
-        [preferences registerObject:&rewindButtonBorderColorFlowColorValue default:@"2" forKey:@"rewindButtonBorderColorFlowColor"];
-        [preferences registerBool:&skipButtonBackgroundColorFlowSwitch default:NO forKey:@"skipButtonBackgroundColorFlow"];
-        [preferences registerObject:&skipButtonBackgroundColorFlowColorValue default:@"0" forKey:@"skipButtonBackgroundColorFlowColor"];
-        [preferences registerBool:&skipButtonColorFlowSwitch default:NO forKey:@"skipButtonColorFlow"];
-        [preferences registerObject:&skipButtonColorFlowColorValue default:@"1" forKey:@"skipButtonColorFlowColor"];
-        [preferences registerBool:&skipButtonBorderColorFlowSwitch default:NO forKey:@"skipButtonBorderColorFlow"];
-        [preferences registerObject:&skipButtonBorderColorFlowColorValue default:@"2" forKey:@"skipButtonBorderColorFlowColor"];
     }
 
 	if (enabled) {

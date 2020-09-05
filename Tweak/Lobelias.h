@@ -105,40 +105,10 @@ BOOL skipButtonBackgroundCustomColorSwitch = NO;
 BOOL skipButtonCustomColorSwitch = NO;
 BOOL skipButtonBorderCustomColorSwitch = NO;
 
-// ColorFlow
-BOOL pauseButtonColorFlowSwitch = NO;
-NSString* pauseButtonColorFlowColorValue = @"2";
-BOOL artworkBorderColorFlowSwitch = NO;
-NSString* artworkBorderColorFlowColorValue = @"0";
-BOOL songTitleColorFlowSwitch = NO;
-NSString* songTitleColorFlowColorValue = @"1";
-BOOL songTitleShadowColorFlowSwitch = NO;
-NSString* songTitleShadowColorFlowColorValue = @"1";
-BOOL artistNameColorFlowSwitch = NO;
-NSString* artistNameColorFlowColorValue = @"2";
-BOOL artistNameShadowColorFlowSwitch = NO;
-NSString* artistNameShadowColorFlowColorValue = @"2";
-BOOL rewindButtonBackgroundColorFlowSwitch = NO;
-NSString* rewindButtonBackgroundColorFlowColorValue = @"0";
-BOOL rewindButtonColorFlowSwitch = NO;
-NSString* rewindButtonColorFlowColorValue = @"1";
-BOOL rewindButtonBorderColorFlowSwitch = NO;
-NSString* rewindButtonBorderColorFlowColorValue = @"2";
-BOOL skipButtonBackgroundColorFlowSwitch = NO;
-NSString* skipButtonBackgroundColorFlowColorValue = @"0";
-BOOL skipButtonColorFlowSwitch = NO;
-NSString* skipButtonColorFlowColorValue = @"1";
-BOOL skipButtonBorderColorFlowSwitch = NO;
-NSString* skipButtonBorderColorFlowColorValue = @"2";
-
 @interface CSCoverSheetViewController : UIViewController
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
-- (void)receiveColorNotification:(NSNotification *)notification;
-@end
-
-@interface NCNotificationListView : UIView
 @end
 
 @interface CSAdjunctItemView : UIView

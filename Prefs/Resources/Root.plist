@@ -86,16 +86,6 @@
  			<key>LIASub</key>
  			<string>skipButtonSub</string>
  		</dict>
-		<dict>
- 			<key>cell</key>
- 			<string>PSLinkCell</string>
- 			<key>label</key>
- 			<string>ColorFlow</string>
- 			<key>detail</key>
- 			<string>LIAColorFlowSubPrefsListController</string>
- 			<key>LIASub</key>
- 			<string>colorflowSub</string>
- 		</dict>
 
 		<dict>
 			<key>cell</key>
