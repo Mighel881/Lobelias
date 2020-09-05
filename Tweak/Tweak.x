@@ -327,6 +327,7 @@ BOOL enableColorFlowSection;
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
         if (information) {
             NSDictionary* dict = (__bridge NSDictionary *)information;
+
             currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]; // set artwork
             [songTitleLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoTitle]]]; // set song title
             if (artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
@@ -335,40 +336,41 @@ BOOL enableColorFlowSection;
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]]; // set artist name
             else if (!artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set album name
-            
-            // set images and unhide elements
-            [lsArtworkBackgroundImageView setImage:currentArtwork];
-            [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
-            [lsArtworkBackgroundImageView setHidden:NO];
-            [lsArtworkImage setHidden:NO];
-            [lsBlurView setHidden:NO];
-            [songTitleLabel setHidden:NO];
-            [artistNameLabel setHidden:NO];
-            [rewindButton setHidden:NO];
-            [skipButton setHidden:NO];
 
-            // get libKitten colors
-            UIColor* backgroundColor = [nena backgroundColor:currentArtwork];
-            UIColor* primaryColor = [nena primaryColor:currentArtwork];
-            UIColor* secondaryColor = [nena secondaryColor:currentArtwork];
+            if (dict) {
+                if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+                    // set images and unhide elements
+                    [lsArtworkBackgroundImageView setImage:currentArtwork];
+                    [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
+                    [lsArtworkBackgroundImageView setHidden:NO];
+                    [lsArtworkImage setHidden:NO];
+                    [lsBlurView setHidden:NO];
+                    [songTitleLabel setHidden:NO];
+                    [artistNameLabel setHidden:NO];
+                    [rewindButton setHidden:NO];
+                    [skipButton setHidden:NO];
 
-            // set libKitten colors
-            [pauseImage setTintColor:secondaryColor];
-            [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
-            [songTitleLabel setTextColor:primaryColor];
-            [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
-            [artistNameLabel setTextColor:secondaryColor];
-            [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
-            [rewindButton setBackgroundColor:backgroundColor];
-            [rewindButton setTintColor:primaryColor];
-            [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
-            [skipButton setBackgroundColor:backgroundColor];
-            [skipButton setTintColor:primaryColor];
-            [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
+                    // get libKitten colors
+                    UIColor* backgroundColor = [nena backgroundColor:currentArtwork];
+                    UIColor* primaryColor = [nena primaryColor:currentArtwork];
+                    UIColor* secondaryColor = [nena secondaryColor:currentArtwork];
+
+                    // set libKitten colors
+                    [pauseImage setTintColor:secondaryColor];
+                    [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
+                    [songTitleLabel setTextColor:primaryColor];
+                    [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
+                    [artistNameLabel setTextColor:secondaryColor];
+                    [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
+                    [rewindButton setBackgroundColor:backgroundColor];
+                    [rewindButton setTintColor:primaryColor];
+                    [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
+                    [skipButton setBackgroundColor:backgroundColor];
+                    [skipButton setTintColor:primaryColor];
+                    [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
+                }
+            }
         } else {
-            [lsArtworkBackgroundImageView setImage:nil];
-            [lsArtworkImage setImage:nil forState:UIControlStateNormal];
-            currentArtwork = nil;
             [lsArtworkBackgroundImageView setHidden:YES];
             [lsArtworkImage setHidden:YES];
             [lsBlurView setHidden:YES];
