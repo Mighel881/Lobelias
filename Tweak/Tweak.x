@@ -315,10 +315,20 @@ BOOL enableColorFlowSection;
             else if ([songTitleColorFlowColorValue intValue] == 1) [songTitleLabel setTextColor:primaryColor];
             else if ([songTitleColorFlowColorValue intValue] == 2) [songTitleLabel setTextColor:secondaryColor];
         }
+        if (songTitleShadowColorFlowSwitch) {
+            if ([songTitleShadowColorFlowColorValue intValue] == 0) [[songTitleLabel layer] setShadowColor:[backgroundColor CGColor]];
+            else if ([songTitleShadowColorFlowColorValue intValue] == 1) [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
+            else if ([songTitleShadowColorFlowColorValue intValue] == 2) [[songTitleLabel layer] setShadowColor:[secondaryColor CGColor]];
+        }
         if (artistNameColorFlowSwitch) {
             if ([artistNameColorFlowColorValue intValue] == 0) [artistNameLabel setTextColor:backgroundColor];
             else if ([artistNameColorFlowColorValue intValue] == 1) [artistNameLabel setTextColor:primaryColor];
             else if ([artistNameColorFlowColorValue intValue] == 2) [artistNameLabel setTextColor:secondaryColor];
+        }
+        if (artistNameShadowColorFlowSwitch) {
+            if ([artistNameShadowColorFlowColorValue intValue] == 0) [[artistNameLabel layer] setShadowColor:[backgroundColor CGColor]];
+            else if ([artistNameShadowColorFlowColorValue intValue] == 1) [[artistNameLabel layer] setShadowColor:[primaryColor CGColor]];
+            else if ([artistNameShadowColorFlowColorValue intValue] == 2) [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
         }
         if (rewindButtonBackgroundColorFlowSwitch) {
             if ([rewindButtonBackgroundColorFlowColorValue intValue] == 0) [rewindButton setBackgroundColor:backgroundColor];
@@ -354,7 +364,9 @@ BOOL enableColorFlowSection;
         [[lsArtworkImage layer] setBorderColor:[[UIColor whiteColor] CGColor]];
         [pauseImage setTintColor:[UIColor whiteColor]];
         [songTitleLabel setTextColor:[UIColor whiteColor]];
+        [[songTitleLabel layer] setShadowColor:[[UIColor whiteColor] CGColor]];
         [artistNameLabel setTextColor:[UIColor colorWithRed: 0.65 green: 0.65 blue: 0.65 alpha: 1.00]];
+        [[artistNameLabel layer] setShadowColor:[[UIColor whiteColor] CGColor]];
         [rewindButton setBackgroundColor:[UIColor colorWithRed: 0.44 green: 0.44 blue: 0.44 alpha: 1.00]];
         [rewindButton setTintColor:[UIColor whiteColor]];
         [[rewindButton layer] setBorderColor:[[UIColor whiteColor] CGColor]];
@@ -371,8 +383,7 @@ BOOL enableColorFlowSection;
 
 // - (void)setFrame:(CGRect)frame {
 
-//     notificationsSuperview = [self superview];
-//     if ([notificationsSuperview isKindOfClass:%c(NCNotificationListView)]) {
+//     if ([NSStringFromClass([self class]) isEqualToString:@"NCNotificationListView"]) {
 //         CGRect newFrame = frame;
 //         newFrame.origin.y += 100;
 //         %orig(newFrame);
@@ -415,6 +426,8 @@ BOOL enableColorFlowSection;
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]]; // set artist name
             else if (!artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set album name
+            
+            // set images and unhide elements
             [lsArtworkBackgroundImageView setImage:currentArtwork];
             [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
             [lsArtworkBackgroundImageView setHidden:NO];
@@ -424,12 +437,29 @@ BOOL enableColorFlowSection;
             [artistNameLabel setHidden:NO];
             [rewindButton setHidden:NO];
             [skipButton setHidden:NO];
+
+            // get libKitten colors
+            UIColor* backgroundColor = [nena backgroundColor:currentArtwork];
+            UIColor* primaryColor = [nena primaryColor:currentArtwork];
+            UIColor* secondaryColor = [nena secondaryColor:currentArtwork];
+
+            // set libKitten colors
+            [pauseImage setTintColor:secondaryColor];
+            [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
+            [songTitleLabel setTextColor:primaryColor];
+            [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
+            [artistNameLabel setTextColor:secondaryColor];
+            [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
+            [rewindButton setBackgroundColor:backgroundColor];
+            [rewindButton setTintColor:primaryColor];
+            [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
+            [skipButton setBackgroundColor:backgroundColor];
+            [skipButton setTintColor:primaryColor];
+            [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
         } else {
             [lsArtworkBackgroundImageView setImage:nil];
             [lsArtworkImage setImage:nil forState:UIControlStateNormal];
             currentArtwork = nil;
-            [songTitleLabel setText:nil];
-            [artistNameLabel setText:nil];
             [lsArtworkBackgroundImageView setHidden:YES];
             [lsArtworkImage setHidden:YES];
             [lsBlurView setHidden:YES];
@@ -519,6 +549,7 @@ BOOL enableColorFlowSection;
 
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"love.litten.lobeliaspreferences"];
     preferencesDictionary = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.lobeliaspreferences.plist"]];
+    nena = [[libKitten alloc] init];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
     [preferences registerBool:&enableBackgroundSection default:nil forKey:@"EnableBackgroundSection"];
@@ -626,8 +657,12 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&artworkBorderColorFlowColorValue default:@"0" forKey:@"artworkBorderColorFlowColor"];
         [preferences registerBool:&songTitleColorFlowSwitch default:NO forKey:@"songTitleColorFlow"];
         [preferences registerObject:&songTitleColorFlowColorValue default:@"1" forKey:@"songTitleColorFlowColor"];
+        [preferences registerBool:&songTitleShadowColorFlowSwitch default:NO forKey:@"songTitleShadowColorFlow"];
+        [preferences registerObject:&songTitleShadowColorFlowColorValue default:@"1" forKey:@"songTitleShadowColorFlowColor"];
         [preferences registerBool:&artistNameColorFlowSwitch default:NO forKey:@"artistNameColorFlow"];
         [preferences registerObject:&artistNameColorFlowColorValue default:@"2" forKey:@"artistNameColorFlowColor"];
+        [preferences registerBool:&artistNameShadowColorFlowSwitch default:NO forKey:@"artistNameShadowColorFlow"];
+        [preferences registerObject:&artistNameShadowColorFlowColorValue default:@"2" forKey:@"artistNameShadowColorFlowColor"];
         [preferences registerBool:&rewindButtonBackgroundColorFlowSwitch default:NO forKey:@"rewindButtonBackgroundColorFlow"];
         [preferences registerObject:&rewindButtonBackgroundColorFlowColorValue default:@"0" forKey:@"rewindButtonBackgroundColorFlowColor"];
         [preferences registerBool:&rewindButtonColorFlowSwitch default:NO forKey:@"rewindButtonColorFlow"];

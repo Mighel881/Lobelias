@@ -43,7 +43,7 @@
 			<key>min</key>
 			<real>-100.0</real>
 			<key>max</key>
-			<real>500.0</real>
+			<real>1000.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
@@ -69,7 +69,7 @@
 			<key>min</key>
 			<real>-100.0</real>
 			<key>max</key>
-			<real>800.0</real>
+			<real>1000.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
@@ -237,8 +237,6 @@
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
-			<key>action</key>
-			<string>showColorpicker</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
@@ -274,8 +272,6 @@
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
-			<key>action</key>
-			<string>showColorpicker2</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
@@ -311,8 +307,6 @@
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
-			<key>action</key>
-			<string>showColorpicker3</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>

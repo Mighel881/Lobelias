@@ -2,9 +2,11 @@
 #import <Cephei/HBPreferences.h>
 #import <MediaRemote/MediaRemote.h>
 #import "libcolorpicker.h"
+#import <Kitten/libKitten.h>
 
 HBPreferences* preferences;
 NSDictionary *preferencesDictionary;
+libKitten* nena;
 
 extern BOOL enabled;
 extern BOOL enableBackgroundSection;
@@ -25,8 +27,6 @@ UILabel* songTitleLabel;
 UILabel* artistNameLabel;
 UIButton* rewindButton;
 UIButton* skipButton;
-
-UIView* notificationsSuperview;
 
 // Background
 NSString* backgroundAlphaValue = @"1.0";
@@ -112,8 +112,12 @@ BOOL artworkBorderColorFlowSwitch = NO;
 NSString* artworkBorderColorFlowColorValue = @"0";
 BOOL songTitleColorFlowSwitch = NO;
 NSString* songTitleColorFlowColorValue = @"1";
+BOOL songTitleShadowColorFlowSwitch = NO;
+NSString* songTitleShadowColorFlowColorValue = @"1";
 BOOL artistNameColorFlowSwitch = NO;
 NSString* artistNameColorFlowColorValue = @"2";
+BOOL artistNameShadowColorFlowSwitch = NO;
+NSString* artistNameShadowColorFlowColorValue = @"2";
 BOOL rewindButtonBackgroundColorFlowSwitch = NO;
 NSString* rewindButtonBackgroundColorFlowColorValue = @"0";
 BOOL rewindButtonColorFlowSwitch = NO;

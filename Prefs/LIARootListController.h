@@ -5,6 +5,8 @@
 #import <Cephei/HBPreferences.h>
 #import <Cephei/HBRespringController.h>
 #import <spawn.h>
+#import <Preferences/PSControlTableCell.h>
+#import <Preferences/PSEditableTableCell.h>
 
 @interface LIAAppearanceSettings : HBAppearanceSettings
 @end
@@ -23,4 +25,9 @@
 - (void)resetPreferences;
 - (void)respring;
 - (void)respringUtil;
+- (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled;
+@end
+
+@interface PSEditableTableCell (Interface)
+- (id)textField;
 @end

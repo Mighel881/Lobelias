@@ -278,32 +278,4 @@ UIVisualEffectView* blurView;
 
 }
 
-- (void)showColorpicker {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"artworkBorderColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"artworkBorderColor"];
-    }];
-
-}
-
-- (void)showColorpicker2 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"pauseImageColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"pauseImageColor"];
-    }];
-
-}
-
 @end

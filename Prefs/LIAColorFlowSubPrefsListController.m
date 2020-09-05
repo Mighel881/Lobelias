@@ -101,40 +101,50 @@ UIVisualEffectView* blurView;
     else if ([specifier.properties[@"key"] isEqualToString:@"songTitleColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"artistNameColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"songTitleShadowColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"artistNameColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"songTitleShadowColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"artistNameColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"artistNameColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"artistNameShadowColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"artistNameShadowColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBackgroundColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBackgroundColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBackgroundColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"rewindButtonBorderColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0] enabled:YES];
 
-    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBorderColorFlow"] && [value isEqual:@(NO)])
+    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBackgroundColorFlow"] && [value isEqual:@(NO)])
 	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:NO];
-    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBorderColorFlow"] && [value isEqual:@(YES)])
+    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBackgroundColorFlow"] && [value isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:YES];
+
+    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonColorFlow"] && [value isEqual:@(NO)])
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:NO];
+    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonColorFlow"] && [value isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:YES];
+
+    if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBorderColorFlow"] && [value isEqual:@(NO)])
+	    [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:NO];
+    else if ([specifier.properties[@"key"] isEqualToString:@"skipButtonBorderColorFlow"] && [value isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:YES];
 
 }
 
@@ -239,6 +249,12 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:26 inSection:0] enabled:YES];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:27 inSection:0] enabled:YES];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:29 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:30 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:32 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:33 inSection:0] enabled:YES];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:YES];
         [self setCellsHidden];
     } else {
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] enabled:NO];
@@ -270,6 +286,12 @@ UIVisualEffectView* blurView;
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:26 inSection:0] enabled:NO];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:27 inSection:0] enabled:NO];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:29 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:30 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:32 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:33 inSection:0] enabled:NO];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:NO];
     }
 
 }
@@ -293,40 +315,50 @@ UIVisualEffectView* blurView;
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"artistNameColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"songTitleShadowColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"rewindButtonBackgroundColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"artistNameColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"rewindButtonColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"artistNameShadowColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:16 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"rewindButtonBorderColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"rewindButtonBackgroundColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"skipButtonBackgroundColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"rewindButtonColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:22 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"skipButtonColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"rewindButtonBorderColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0] enabled:NO];
 
-    if ([[preferences objectForKey:@"skipButtonBorderColorFlow"] isEqual:@(YES)])
+    if ([[preferences objectForKey:@"skipButtonBackgroundColorFlow"] isEqual:@(YES)])
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:YES];
     else
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:28 inSection:0] enabled:NO];
+
+    if ([[preferences objectForKey:@"skipButtonColorFlow"] isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:YES];
+    else
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:31 inSection:0] enabled:NO];
+
+    if ([[preferences objectForKey:@"skipButtonBorderColorFlow"] isEqual:@(YES)])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:YES];
+    else
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:34 inSection:0] enabled:NO];
 
 }
 

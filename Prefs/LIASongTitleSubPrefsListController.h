@@ -6,7 +6,6 @@
 #import <Cephei/HBPreferences.h>
 #import <Preferences/PSControlTableCell.h>
 #import <Preferences/PSEditableTableCell.h>
-#import "libcolorpicker.h"
 
 @interface LIAAppearanceSettings : HBAppearanceSettings
 @end
@@ -19,8 +18,6 @@
 - (void)toggleCellState:(BOOL)enable;
 - (void)setCellsHidden;
 - (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled;
-- (void)showColorpicker;
-- (void)showColorpicker2;
 @end
 
 @interface PSEditableTableCell (Interface)

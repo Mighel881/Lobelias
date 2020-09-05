@@ -312,32 +312,4 @@ UIVisualEffectView* blurView;
 
 }
 
-- (void)showColorpicker {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"songTitleColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"songTitleColor"];
-    }];
-
-}
-
-- (void)showColorpicker2 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"songTitleShadowColor", @"#000000:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"songTitleShadowColor"];
-    }];
-
-}
-
 @end

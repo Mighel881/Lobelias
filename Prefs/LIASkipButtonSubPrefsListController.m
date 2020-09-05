@@ -292,46 +292,4 @@ UIVisualEffectView* blurView;
 
 }
 
-- (void)showColorpicker {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"skipButtonBackgroundColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"skipButtonBackgroundColor"];
-    }];
-
-}
-
-- (void)showColorpicker2 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"skipButtonColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"skipButtonColor"];
-    }];
-
-}
-
-- (void)showColorpicker3 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"skipButtonBorderColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"skipButtonBorderColor"];
-    }];
-
-}
-
 @end

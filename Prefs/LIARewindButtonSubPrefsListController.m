@@ -292,46 +292,4 @@ UIVisualEffectView* blurView;
 
 }
 
-- (void)showColorpicker {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"rewindButtonBackgroundColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"rewindButtonBackgroundColor"];
-    }];
-
-}
-
-- (void)showColorpicker2 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"rewindButtonColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"rewindButtonColor"];
-    }];
-
-}
-
-- (void)showColorpicker3 {
-
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
-    UIColor* startColor = LCPParseColorString(@"rewindButtonBorderColor", @"#ffffff:1.000000");
-    PFColorAlert* alert = [PFColorAlert colorAlertWithStartColor:startColor showAlpha:NO];
-
-    [alert displayWithCompletion:^void (UIColor* pickedColor) {
-        NSString* hexString = [UIColor hexFromColor:pickedColor];
-        hexString = [hexString stringByAppendingFormat:@":%f", pickedColor.alpha];
-        [preferences setObject:hexString forKey:@"rewindButtonBorderColor"];
-    }];
-
-}
-
 @end

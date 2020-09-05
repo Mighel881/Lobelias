@@ -150,6 +150,53 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
+			<string>Song Title Shadow</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>songTitleShadowColorFlow</string>
+			<key>label</key>
+			<string>Use ColorFlow Colors</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>songTitleShadowColorFlowColor</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Background</string>
+				<string>Primary</string>
+				<string>Secondary</string>
+			</array>
+			<key>alignment</key>
+			<string>3</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
 			<string>Artist Name</string>
 		</dict>
         <dict>
@@ -175,6 +222,53 @@
 			<string>love.litten.lobeliaspreferences</string>
 			<key>key</key>
 			<string>artistNameColorFlowColor</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Background</string>
+				<string>Primary</string>
+				<string>Secondary</string>
+			</array>
+			<key>alignment</key>
+			<string>3</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Artist Name Shadow</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>artistNameShadowColorFlow</string>
+			<key>label</key>
+			<string>Use ColorFlow Colors</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>2</integer>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>artistNameShadowColorFlowColor</string>
 			<key>validValues</key>
 			<array>
 				<integer>0</integer>

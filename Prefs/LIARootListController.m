@@ -116,6 +116,9 @@ UIImage* currentArtwork;
         [blurView setAlpha:0.0];
     } completion:nil];
 
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/ColorFlow5.dylib"])
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:NO];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -130,9 +133,15 @@ UIImage* currentArtwork;
     [[self enableSwitch] setEnabled:NO];
 
     UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"Lobelias"
-	message:@"Lockscreen section disabled due to Lobelias being disabled with iCleaner Pro"
+	message:@"Lobelias Preferences disabled due to Lobelias being disabled with iCleaner Pro"
 	preferredStyle:UIAlertControllerStyleAlert];
 	
+    UIAlertAction* resetAction = [UIAlertAction actionWithTitle:@"Reset Preferences" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+			
+        [self resetPreferences];
+
+	}];
+
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Okey" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
 			
         [[self navigationController] popViewControllerAnimated:YES];
@@ -140,6 +149,7 @@ UIImage* currentArtwork;
 	}];
 
 	[alertController addAction:confirmAction];
+    [alertController addAction:resetAction];
 
 	[self presentViewController:alertController animated:YES completion:nil];
 
@@ -242,7 +252,6 @@ UIImage* currentArtwork;
     HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.lobeliaspreferences"];
     for (NSString* key in [preferences dictionaryRepresentation]) {
         [preferences removeObjectForKey:key];
-
     }
     
     [[self enableSwitch] setOn:NO animated: YES];
@@ -274,6 +283,26 @@ UIImage* currentArtwork;
     [HBRespringController respringAndReturnTo:[NSURL URLWithString:@"prefs:root=Lobelias"]];
 
     posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)args, NULL);
+
+}
+
+- (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled {
+
+    UITableViewCell* cell = [self tableView:self.table cellForRowAtIndexPath:indexPath];
+
+    if (cell) {
+        cell.userInteractionEnabled = enabled;
+        cell.textLabel.enabled = enabled;
+        cell.detailTextLabel.enabled = enabled;
+        if ([cell isKindOfClass:[PSControlTableCell class]]) {
+            PSControlTableCell *controlCell = (PSControlTableCell *)cell;
+            if (controlCell.control)
+                controlCell.control.enabled = enabled;
+        } else if ([cell isKindOfClass:[PSEditableTableCell class]]) {
+            PSEditableTableCell *editableCell = (PSEditableTableCell *)cell;
+            ((UITextField*)[editableCell textField]).alpha = enabled ? 1 : 0.4;
+        }
+    }
 
 }
 

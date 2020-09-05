@@ -11,6 +11,6 @@ $(TWEAK_NAME)_CFLAGS = -fobjc-arc
 $(TWEAK_NAME)_FRAMEWORKS = UIKit
 $(TWEAK_NAME)_PRIVATE_FRAMEWORKS = MediaRemote
 $(TWEAK_NAME)_EXTRA_FRAMEWORKS = Cephei
-$(TWEAK_NAME)_LIBRARIES = colorpicker
+$(TWEAK_NAME)_LIBRARIES = colorpicker kitten
 
 include $(THEOS_MAKE_PATH)/tweak.mk
