@@ -44,6 +44,8 @@ NSString* artworkCornerRadiusValue = @"115.0";
 NSString* artworkBorderWidthValue = @"4.0";
 BOOL artworkBorderCustomColorSwitch = NO;
 BOOL pauseImageCustomColorSwitch = NO;
+BOOL artworkBorderLibKittenSwitch = NO;
+BOOL pauseImageLibKittenSwitch = NO;
 
 // Song Title
 BOOL customSongTitlePositionAndSizeSwitch = NO;
@@ -55,7 +57,9 @@ NSString* songTitleAlphaValue = @"1.0";
 NSString* songTitleCustomFontValue = @"";
 NSString* songTitleFontSizeValue = @"24.0";
 BOOL songTitleCustomColorSwitch = NO;
+BOOL songTitleLibKittenSwitch = NO;
 BOOL songTitleShadowSwitch = NO;
+BOOL songTitleShadowLibKittenSwitch = NO;
 NSString* songTitleShadowRadiusValue = @"0.0";
 NSString* songTitleShadowOpacityValue = @"0.0";
 NSString* songTitleShadowXValue = @"0.0";
@@ -73,7 +77,9 @@ NSString* artistNameFontSizeValue = @"19.0";
 BOOL artistNameShowArtistNameSwitch = YES;
 BOOL artistNameShowAlbumNameSwitch = YES;
 BOOL artistNameCustomColorSwitch = NO;
+BOOL artistNameLibKittenSwitch = NO;
 BOOL artistNameShadowSwitch = NO;
+BOOL artistNameShadowLibKittenSwitch = NO;
 NSString* artistNameShadowRadiusValue = @"0.0";
 NSString* artistNameShadowOpacityValue = @"0.0";
 NSString* artistNameShadowXValue = @"0.0";
@@ -91,6 +97,9 @@ NSString* rewindButtonBorderWidthValue = @"0.0";
 BOOL rewindButtonBackgroundCustomColorSwitch = NO;
 BOOL rewindButtonCustomColorSwitch = NO;
 BOOL rewindButtonBorderCustomColorSwitch = NO;
+BOOL rewindButtonBackgroundLibKittenSwitch = NO;
+BOOL rewindButtonLibKittenSwitch = NO;
+BOOL rewindButtonBorderLibKittenSwitch = NO;
 
 // Skip Button
 BOOL customSkipButtonPositionAndSizeSwitch = NO;
@@ -104,14 +113,14 @@ NSString* skipButtonBorderWidthValue = @"0.0";
 BOOL skipButtonBackgroundCustomColorSwitch = NO;
 BOOL skipButtonCustomColorSwitch = NO;
 BOOL skipButtonBorderCustomColorSwitch = NO;
+BOOL skipButtonBackgroundLibKittenSwitch = NO;
+BOOL skipButtonLibKittenSwitch = NO;
+BOOL skipButtonBorderLibKittenSwitch = NO;
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
-@end
-
-@interface CSAdjunctItemView : UIView
 @end
 
 @interface SBMediaController : NSObject

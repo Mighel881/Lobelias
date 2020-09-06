@@ -364,18 +364,18 @@ BOOL enableColorFlowSection;
                     UIColor* secondaryColor = [nena secondaryColor:currentArtwork];
 
                     // set libKitten colors
-                    [pauseImage setTintColor:secondaryColor];
-                    [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
-                    [songTitleLabel setTextColor:primaryColor];
-                    [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
-                    [artistNameLabel setTextColor:secondaryColor];
-                    [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
-                    [rewindButton setBackgroundColor:backgroundColor];
-                    [rewindButton setTintColor:primaryColor];
-                    [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
-                    [skipButton setBackgroundColor:backgroundColor];
-                    [skipButton setTintColor:primaryColor];
-                    [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
+                    if (pauseImageLibKittenSwitch) [pauseImage setTintColor:secondaryColor];
+                    if (artworkBorderLibKittenSwitch) [[lsArtworkImage layer] setBorderColor:[backgroundColor CGColor]];
+                    if (songTitleLibKittenSwitch) [songTitleLabel setTextColor:primaryColor];
+                    if (songTitleShadowLibKittenSwitch) [[songTitleLabel layer] setShadowColor:[primaryColor CGColor]];
+                    if (artistNameLibKittenSwitch) [artistNameLabel setTextColor:secondaryColor];
+                    if (artistNameShadowLibKittenSwitch) [[artistNameLabel layer] setShadowColor:[secondaryColor CGColor]];
+                    if (rewindButtonBackgroundLibKittenSwitch) [rewindButton setBackgroundColor:backgroundColor];
+                    if (rewindButtonLibKittenSwitch) [rewindButton setTintColor:primaryColor];
+                    if (rewindButtonBorderLibKittenSwitch) [[rewindButton layer] setBorderColor:[secondaryColor CGColor]];
+                    if (skipButtonBackgroundLibKittenSwitch) [skipButton setBackgroundColor:backgroundColor];
+                    if (skipButtonLibKittenSwitch) [skipButton setTintColor:primaryColor];
+                    if (skipButtonBorderLibKittenSwitch) [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
                 }
             }
         } else {
@@ -498,6 +498,8 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&artworkBorderWidthValue default:@"4.0" forKey:@"artworkBorderWidth"];
         [preferences registerBool:&artworkBorderCustomColorSwitch default:NO forKey:@"artworkBorderCustomColor"];
         [preferences registerBool:&pauseImageCustomColorSwitch default:NO forKey:@"pauseImageCustomColor"];
+        [preferences registerBool:&artworkBorderLibKittenSwitch default:NO forKey:@"artworkBorderLibKitten"];
+        [preferences registerBool:&pauseImageLibKittenSwitch default:NO forKey:@"pauseImageLibKitten"];
     }
 
     // Song Title
@@ -511,7 +513,9 @@ BOOL enableColorFlowSection;
         [preferences registerObject:&songTitleCustomFontValue default:@"" forKey:@"songTitleCustomFont"];
         [preferences registerObject:&songTitleFontSizeValue default:@"24.0" forKey:@"songTitleFontSize"];
         [preferences registerBool:&songTitleCustomColorSwitch default:NO forKey:@"songTitleCustomColor"];
+        [preferences registerBool:&songTitleLibKittenSwitch default:NO forKey:@"songTitleLibKitten"];
         [preferences registerBool:&songTitleShadowSwitch default:NO forKey:@"songTitleShadow"];
+        [preferences registerBool:&songTitleShadowLibKittenSwitch default:NO forKey:@"songTitleShadowLibKitten"];
         [preferences registerObject:&songTitleShadowRadiusValue default:@"0.0" forKey:@"songTitleShadowRadius"];
         [preferences registerObject:&songTitleShadowOpacityValue default:@"0.0" forKey:@"songTitleShadowOpacity"];
         [preferences registerObject:&songTitleShadowXValue default:@"0.0" forKey:@"songTitleShadowX"];
@@ -531,7 +535,9 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&artistNameShowArtistNameSwitch default:YES forKey:@"artistNameShowArtistName"];
         [preferences registerBool:&artistNameShowAlbumNameSwitch default:YES forKey:@"artistNameShowAlbumName"];
         [preferences registerBool:&artistNameCustomColorSwitch default:NO forKey:@"artistNameCustomColor"];
+        [preferences registerBool:&artistNameLibKittenSwitch default:NO forKey:@"artistNameLibKitten"];
         [preferences registerBool:&artistNameShadowSwitch default:NO forKey:@"artistNameShadow"];
+        [preferences registerBool:&artistNameShadowLibKittenSwitch default:NO forKey:@"artistNameShadowLibKitten"];
         [preferences registerObject:&artistNameShadowRadiusValue default:@"0.0" forKey:@"artistNameShadowRadius"];
         [preferences registerObject:&artistNameShadowOpacityValue default:@"0.0" forKey:@"artistNameShadowOpacity"];
         [preferences registerObject:&artistNameShadowXValue default:@"0.0" forKey:@"artistNameShadowX"];
@@ -551,6 +557,9 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&rewindButtonBackgroundCustomColorSwitch default:NO forKey:@"rewindButtonBackgroundCustomColor"];
         [preferences registerBool:&rewindButtonCustomColorSwitch default:NO forKey:@"rewindButtonCustomColor"];
         [preferences registerBool:&rewindButtonBorderCustomColorSwitch default:NO forKey:@"rewindButtonBorderCustomColor"];
+        [preferences registerBool:&rewindButtonBackgroundLibKittenSwitch default:NO forKey:@"rewindButtonBackgroundLibKitten"];
+        [preferences registerBool:&rewindButtonLibKittenSwitch default:NO forKey:@"rewindButtonLibKitten"];
+        [preferences registerBool:&rewindButtonBorderLibKittenSwitch default:NO forKey:@"rewindButtonBorderLibKitten"];
     }
 
     // Skip Button
@@ -566,6 +575,9 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&skipButtonBackgroundCustomColorSwitch default:NO forKey:@"skipButtonBackgroundCustomColor"];
         [preferences registerBool:&skipButtonCustomColorSwitch default:NO forKey:@"skipButtonCustomColor"];
         [preferences registerBool:&skipButtonBorderCustomColorSwitch default:NO forKey:@"skipButtonBorderCustomColor"];
+        [preferences registerBool:&skipButtonBackgroundLibKittenSwitch default:NO forKey:@"skipButtonBackgroundLibKitten"];
+        [preferences registerBool:&skipButtonLibKittenSwitch default:NO forKey:@"skipButtonLibKitten"];
+        [preferences registerBool:&skipButtonBorderLibKittenSwitch default:NO forKey:@"skipButtonBorderLibKitten"];
     }
 
 	if (enabled) {
