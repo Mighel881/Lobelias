@@ -80,7 +80,7 @@ BOOL enableColorFlowSection;
     // pause image
     if (!pauseImage) {
         if (customArtworkPositionAndSizeSwitch) {
-            pauseImage = [[UIImageView alloc] initWithFrame:CGRectMake([customArtworkXAxisValue doubleValue], [customArtworkYAxisValue doubleValue], [customArtworkWidthValue doubleValue], [customArtworkHeightValue doubleValue])];
+            pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
         } else {
             pauseImage = [[UIImageView alloc] init];
             [pauseImage setTranslatesAutoresizingMaskIntoConstraints:NO];
