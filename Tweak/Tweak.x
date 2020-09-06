@@ -50,10 +50,10 @@ BOOL enableColorFlowSection;
         if (customArtworkPositionAndSizeSwitch) {
             lsArtworkImage = [[UIButton alloc] initWithFrame:CGRectMake([customArtworkXAxisValue doubleValue], [customArtworkYAxisValue doubleValue], [customArtworkWidthValue doubleValue], [customArtworkHeightValue doubleValue])];
         } else {
-            lsArtworkImage = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 230, 230)];
-            CGPoint artworkCenter = [[self view] center];
-            artworkCenter.y = self.view.frame.size.height / 2;
-            [lsArtworkImage setCenter:artworkCenter];
+            lsArtworkImage = [[UIButton alloc] init];
+            [lsArtworkImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [lsArtworkImage.widthAnchor constraintEqualToConstant:230.0].active = YES;
+            [lsArtworkImage.heightAnchor constraintEqualToConstant:230.0].active = YES;
         }
         [lsArtworkImage addTarget:self action:@selector(pausePlaySong) forControlEvents:UIControlEventTouchDown];
         [lsArtworkImage setContentMode:UIViewContentModeScaleAspectFill];
@@ -70,11 +70,23 @@ BOOL enableColorFlowSection;
         [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
         [lsArtworkImage setHidden:YES];
         if (![lsArtworkImage isDescendantOfView:lsArtworkBackgroundImageView]) [[self view] addSubview:lsArtworkImage];
+
+        if (!customArtworkPositionAndSizeSwitch) {
+            [lsArtworkImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [lsArtworkImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
+        }
     }
     
     // pause image
     if (!pauseImage) {
-        pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
+        if (customArtworkPositionAndSizeSwitch) {
+            pauseImage = [[UIImageView alloc] initWithFrame:CGRectMake([customArtworkXAxisValue doubleValue], [customArtworkYAxisValue doubleValue], [customArtworkWidthValue doubleValue], [customArtworkHeightValue doubleValue])];
+        } else {
+            pauseImage = [[UIImageView alloc] init];
+            [pauseImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [pauseImage.widthAnchor constraintEqualToConstant:230.0].active = YES;
+            [pauseImage.heightAnchor constraintEqualToConstant:230.0].active = YES;
+        }
         [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
         [pauseImage setClipsToBounds:YES];
         [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
@@ -88,6 +100,11 @@ BOOL enableColorFlowSection;
         [pauseImage setAlpha:0.0];
         [pauseImage setHidden:NO];
         if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
+
+        if (!customArtworkPositionAndSizeSwitch) {
+            [pauseImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [pauseImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
+        }
     }
     
     // song title
@@ -95,10 +112,10 @@ BOOL enableColorFlowSection;
         if (customSongTitlePositionAndSizeSwitch) {
             songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake([customSongTitleXAxisValue doubleValue], [customSongTitleYAxisValue doubleValue], [customSongTitleWidthValue doubleValue], [customSongTitleHeightValue doubleValue])];
         } else {
-            songTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
-            CGPoint songTitleCenter = [[self view] center];
-            songTitleCenter.y = self.view.frame.size.height / 1.365;
-            [songTitleLabel setCenter:songTitleCenter];
+            songTitleLabel = [[UILabel alloc] init];
+            [songTitleLabel.widthAnchor constraintEqualToConstant:180.0].active = YES;
+            [songTitleLabel.heightAnchor constraintEqualToConstant:29.0].active = YES;
+            [songTitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
         if (songTitleCustomColorSwitch) {
             NSString* songTitleColorHex = [preferencesDictionary objectForKey:@"songTitleColor"];
@@ -121,6 +138,11 @@ BOOL enableColorFlowSection;
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
         [songTitleLabel setHidden:YES];
         if (![songTitleLabel isDescendantOfView:[self view]]) [[self view] addSubview:songTitleLabel];
+
+        if (!customSongTitlePositionAndSizeSwitch) {
+            [songTitleLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [songTitleLabel.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:75.0].active = YES;
+        }
     }
     
     // artist name & album title
@@ -128,10 +150,10 @@ BOOL enableColorFlowSection;
         if (customArtistNamePositionAndSizeSwitch) {
             artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake([customArtistNameXAxisValue doubleValue], [customArtistNameYAxisValue doubleValue], [customArtistNameWidthValue doubleValue], [customArtistNameHeightValue doubleValue])];
         } else {
-            artistNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
-            CGPoint artistNameCenter = [[self view] center];
-            artistNameCenter.y = self.view.frame.size.height / 1.3;
-            [artistNameLabel setCenter:artistNameCenter];
+            artistNameLabel = [[UILabel alloc] init];
+            [artistNameLabel.widthAnchor constraintEqualToConstant:180.0].active = YES;
+            [artistNameLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+            [artistNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
         if (artistNameCustomColorSwitch) {
             NSString* artistNameColorHex = [preferencesDictionary objectForKey:@"artistNameColor"];
@@ -154,14 +176,23 @@ BOOL enableColorFlowSection;
         [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
         [artistNameLabel setHidden:YES];
         if (![artistNameLabel isDescendantOfView:[self view]]) [[self view] addSubview:artistNameLabel];
+
+        if (!customArtworkPositionAndSizeSwitch) {
+            [artistNameLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [artistNameLabel.centerYAnchor constraintEqualToAnchor:songTitleLabel.bottomAnchor constant:10.0].active = YES;
+        }
     }
     
     // rewind button
     if (!rewindButton && enableRewindButtonSection) {
-        if (customRewindButtonPositionAndSizeSwitch)
+        if (customRewindButtonPositionAndSizeSwitch) {
             rewindButton = [[UIButton alloc] initWithFrame:CGRectMake([customRewindButtonXAxisValue doubleValue], [customRewindButtonYAxisValue doubleValue], [customRewindButtonWidthValue doubleValue], [customRewindButtonHeightValue doubleValue])];
-        else
-            rewindButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 580, 55, 55)];
+        } else {
+            rewindButton = [[UIButton alloc] init];
+            [rewindButton.widthAnchor constraintEqualToConstant:55.0].active = YES;
+            [rewindButton.heightAnchor constraintEqualToConstant:55.0].active = YES;
+            [rewindButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        }
         [rewindButton addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchDown];
         UIImage* rewindImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/rewindImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [rewindButton setImage:rewindImage forState:UIControlStateNormal];
@@ -190,14 +221,23 @@ BOOL enableColorFlowSection;
         [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
         [rewindButton setHidden:YES];
         if (![rewindButton isDescendantOfView:[self view]]) [[self view] addSubview:rewindButton];
+
+        if (!customRewindButtonPositionAndSizeSwitch) {
+            [rewindButton.centerXAnchor constraintEqualToAnchor:songTitleLabel.leftAnchor constant:-40.0].active = YES;
+            [rewindButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:85.0].active = YES;
+        }
     }
     
     // skip button
     if (!skipButton && enableSkipButtonSection) {
-        if (customSkipButtonPositionAndSizeSwitch)
+        if (customSkipButtonPositionAndSizeSwitch) {
             skipButton = [[UIButton alloc] initWithFrame:CGRectMake([customSkipButtonXAxisValue doubleValue], [customSkipButtonYAxisValue doubleValue], [customSkipButtonWidthValue doubleValue], [customSkipButtonHeightValue doubleValue])];
-        else
-            skipButton = [[UIButton alloc] initWithFrame:CGRectMake(290, 580, 55, 55)];
+        } else {
+            skipButton = [[UIButton alloc] init];
+            [skipButton.widthAnchor constraintEqualToConstant:55.0].active = YES;
+            [skipButton.heightAnchor constraintEqualToConstant:55.0].active = YES;
+            [skipButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        }
         [skipButton addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchDown];
         UIImage* skipImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/skipImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [skipButton setImage:skipImage forState:UIControlStateNormal];
@@ -226,6 +266,11 @@ BOOL enableColorFlowSection;
         [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
         [skipButton setHidden:YES];
         if (![skipButton isDescendantOfView:[self view]]) [[self view] addSubview:skipButton];
+
+        if (!customSkipButtonPositionAndSizeSwitch) {
+            [skipButton.centerXAnchor constraintEqualToAnchor:songTitleLabel.rightAnchor constant:40.0].active = YES;
+            [skipButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:85.0].active = YES;
+        }
     }
 
 }
