@@ -7,7 +7,7 @@ BOOL enableSongTitleSection;
 BOOL enableArtistNameSection;
 BOOL enableRewindButtonSection;
 BOOL enableSkipButtonSection;
-BOOL enableColorFlowSection;
+BOOL enableOthersSection;
 
 %group Lobelias
 
@@ -363,13 +363,27 @@ BOOL enableColorFlowSection;
 
 %end
 
+%hook CSAdjunctItemView
+
+- (id)initWithFrame:(CGRect)frame { // remove original player
+
+    return nil;
+
+}
+
+%end
+
+%end
+
+%group LobeliasOthers
+
 %hook NCNotificationListView
 
 - (void)_scrollViewWillBeginDragging { // fade lobelias out when scrolling and notifications are presented
 
 	%orig;
 
-    if (notificationCount <= 0) return;
+    if ([notificationPositionValue doubleValue] == 0.0 || notificationCount <= 0) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [lsArtworkImage setAlpha:0.2];
         [songTitleLabel setAlpha:0.2];
@@ -384,7 +398,7 @@ BOOL enableColorFlowSection;
 
 	%orig;
 
-    if (notificationCount <= 0) return;
+    if ([notificationPositionValue doubleValue] == 0.0 || notificationCount <= 0) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
@@ -403,6 +417,7 @@ BOOL enableColorFlowSection;
 
     %orig;
 
+    if ([notificationPositionValue doubleValue] == 0.0) return;
     [self setFrame:self.frame];
 
 }
@@ -411,9 +426,9 @@ BOOL enableColorFlowSection;
 
     %orig;
 
-    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
     CGRect newFrame = frame;
-    newFrame.origin.y += 140;
+    newFrame.origin.y += [notificationPositionValue doubleValue];
     %orig(newFrame);
 
 }
@@ -426,6 +441,7 @@ BOOL enableColorFlowSection;
 
     %orig;
 
+    if ([notificationPositionValue doubleValue] == 0.0) return;
     [self setFrame:self.frame];
 
 }
@@ -434,9 +450,9 @@ BOOL enableColorFlowSection;
 
     %orig;
 
-    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
     CGRect newFrame = frame;
-    newFrame.origin.y += 140;
+    newFrame.origin.y += [notificationPositionValue doubleValue];
     %orig(newFrame);
 
 }
@@ -449,6 +465,7 @@ BOOL enableColorFlowSection;
 
     %orig;
 
+    if ([notificationPositionValue doubleValue] == 0.0) return;
     [self setFrame:self.frame];
 
 }
@@ -457,9 +474,9 @@ BOOL enableColorFlowSection;
 
     %orig;
 
-    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
     CGRect newFrame = frame;
-    newFrame.origin.y += 140;
+    newFrame.origin.y += [notificationPositionValue doubleValue];
     %orig(newFrame);
 
 }
@@ -471,19 +488,9 @@ BOOL enableColorFlowSection;
 
 - (unsigned long long)notificationCount { // get notifications count
 
-    notificationCount = %orig;
+    if ([notificationPositionValue doubleValue] != 0.0) notificationCount = %orig;
 
     return %orig;
-
-}
-
-%end
-
-%hook CSAdjunctItemView
-
-- (id)initWithFrame:(CGRect)frame { // remove original player
-
-    return nil;
 
 }
 
@@ -647,7 +654,7 @@ BOOL enableColorFlowSection;
     [preferences registerBool:&enableArtistNameSection default:nil forKey:@"EnableArtistNameSection"];
     [preferences registerBool:&enableRewindButtonSection default:nil forKey:@"EnableRewindButtonSection"];
     [preferences registerBool:&enableSkipButtonSection default:nil forKey:@"EnableSkipButtonSection"];
-    [preferences registerBool:&enableColorFlowSection default:nil forKey:@"EnableColorFlowSection"];
+    [preferences registerBool:&enableOthersSection default:nil forKey:@"EnableOthersSection"];
 
     // Background
     if (enableBackgroundSection) {
@@ -750,8 +757,13 @@ BOOL enableColorFlowSection;
         [preferences registerBool:&skipButtonBorderLibKittenSwitch default:NO forKey:@"skipButtonBorderLibKitten"];
     }
 
+    if (enableOthersSection) {
+        [preferences registerObject:&notificationPositionValue default:@"0.0" forKey:@"notificationPosition"];
+    }
+
 	if (enabled) {
         %init(Lobelias);
+        if (enableOthersSection) %init(LobeliasOthers);
         %init(LobeliasData);
         if (enableBackgroundSection && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"]) %init(TweakCompatibility);
         return;

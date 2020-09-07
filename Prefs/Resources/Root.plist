@@ -86,6 +86,16 @@
  			<key>LIASub</key>
  			<string>skipButtonSub</string>
  		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Others</string>
+ 			<key>detail</key>
+ 			<string>LIAOthersSubPrefsListController</string>
+ 			<key>LIASub</key>
+ 			<string>othersSub</string>
+ 		</dict>
 
 		<dict>
 			<key>cell</key>

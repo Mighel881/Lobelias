@@ -17,7 +17,7 @@ extern BOOL enableSongTitleSection;
 extern BOOL enableArtistNameSection;
 extern BOOL enableRewindButtonSection;
 extern BOOL enableSkipButtonSection;
-extern BOOL enableColorFlowSection;
+extern BOOL enableOthersSection;
 
 UIImage* currentArtwork;
 UIImageView* lsArtworkBackgroundImageView;
@@ -119,6 +119,9 @@ BOOL skipButtonBorderCustomColorSwitch = NO;
 BOOL skipButtonBackgroundLibKittenSwitch = NO;
 BOOL skipButtonLibKittenSwitch = NO;
 BOOL skipButtonBorderLibKittenSwitch = NO;
+
+// Others
+NSString* notificationPositionValue = @"0.0";
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)setTime;
