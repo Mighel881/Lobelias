@@ -8,6 +8,8 @@ HBPreferences* preferences;
 NSDictionary *preferencesDictionary;
 libKitten* nena;
 
+int notificationCount;
+
 extern BOOL enabled;
 extern BOOL enableBackgroundSection;
 extern BOOL enableArtworkSection;
@@ -27,6 +29,7 @@ UILabel* songTitleLabel;
 UILabel* artistNameLabel;
 UIButton* rewindButton;
 UIButton* skipButton;
+// UISlider* timeControlSlider;
 
 // Background
 NSString* backgroundAlphaValue = @"1.0";
@@ -118,14 +121,26 @@ BOOL skipButtonLibKittenSwitch = NO;
 BOOL skipButtonBorderLibKittenSwitch = NO;
 
 @interface CSCoverSheetViewController : UIViewController
+- (void)setTime;
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
 @end
 
+@interface NCNotificationListView : UIView
+@end
+
+@interface NCNotificationListHeaderTitleView : UIView
+@end
+
+@interface NCToggleControl : UIView
+@end
+
 @interface SBMediaController : NSObject
 + (id)sharedInstance;
 - (BOOL)isPaused;
+- (BOOL)isPlaying;
+- (BOOL)beginSeek:(int)arg1 eventSource:(long long)arg2;
 - (void)setNowPlayingInfo:(id)arg1;
 - (BOOL)changeTrack:(int)arg1 eventSource:(long long)arg2;
 - (BOOL)togglePlayPauseForEventSource:(long long)arg1;

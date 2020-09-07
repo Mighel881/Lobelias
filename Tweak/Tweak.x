@@ -273,7 +273,29 @@ BOOL enableColorFlowSection;
         }
     }
 
+    // if (!timeControlSlider) {
+    //     timeControlSlider = [[UISlider alloc] init];
+    //     [timeControlSlider.widthAnchor constraintEqualToConstant:250.0].active = YES;
+    //     [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
+    //     [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+    //     [timeControlSlider addTarget:self action:@selector(setTime) forControlEvents:UIControlEventValueChanged];
+    //     [timeControlSlider setContinuous:YES];
+    //     [timeControlSlider setMinimumValue:0.0];
+    //     [timeControlSlider setMaximumValue:1.0];
+    //     [timeControlSlider setHidden:NO];
+    //     if (![timeControlSlider isDescendantOfView:[self view]]) [[self view] addSubview:timeControlSlider];
+        
+    //     [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+    //     [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:100.0].active = YES;
+    // }
+
 }
+
+// %new
+// - (void)setTime {
+
+// }
 
 %new
 - (void)rewindSong { // rewind song
@@ -341,21 +363,121 @@ BOOL enableColorFlowSection;
 
 %end
 
-// %hook NCNotificationListView
+%hook NCNotificationListView
 
-// - (void)setFrame:(CGRect)frame {
+- (void)_scrollViewWillBeginDragging { // fade lobelias out when scrolling and notifications are presented
 
-//     if ([NSStringFromClass([self class]) isEqualToString:@"NCNotificationListView"]) {
-//         CGRect newFrame = frame;
-//         newFrame.origin.y += 100;
-//         %orig(newFrame);
-//     } else {
-//         %orig;
-//     }
+	%orig;
 
-// }
+    if (notificationCount <= 0) return;
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [lsArtworkImage setAlpha:0.2];
+        [songTitleLabel setAlpha:0.2];
+        [artistNameLabel setAlpha:0.2];
+        [rewindButton setAlpha:0.2];
+        [skipButton setAlpha:0.2];
+    } completion:nil];
 
-// %end
+}
+
+- (void)_scrollViewDidEndDecelerating { // fade lobelias in when stopped scrolling
+
+	%orig;
+
+    if (notificationCount <= 0) return;
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
+        [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
+        [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
+        [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
+        [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
+    } completion:nil];
+
+}
+
+%end
+
+%hook NCNotificationListView
+
+- (void)didMoveToWindow { // lower notifications
+
+    %orig;
+
+    [self setFrame:self.frame];
+
+}
+
+- (void)setFrame:(CGRect)frame { // lower notifications
+
+    %orig;
+
+    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    CGRect newFrame = frame;
+    newFrame.origin.y += 140;
+    %orig(newFrame);
+
+}
+
+%end
+
+%hook NCNotificationListHeaderTitleView
+
+- (void)didMoveToWindow { // lower notifications header
+
+    %orig;
+
+    [self setFrame:self.frame];
+
+}
+
+- (void)setFrame:(CGRect)frame { // lower notifications header
+
+    %orig;
+
+    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    CGRect newFrame = frame;
+    newFrame.origin.y += 140;
+    %orig(newFrame);
+
+}
+
+%end
+
+%hook NCToggleControl
+
+- (void)didMoveToWindow { // lower notifications control button
+
+    %orig;
+
+    [self setFrame:self.frame];
+
+}
+
+- (void)setFrame:(CGRect)frame { // lower notifications control button
+
+    %orig;
+
+    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return;
+    CGRect newFrame = frame;
+    newFrame.origin.y += 140;
+    %orig(newFrame);
+
+}
+
+%end
+
+
+%hook NCNotificationMasterList
+
+- (unsigned long long)notificationCount { // get notifications count
+
+    notificationCount = %orig;
+
+    return %orig;
+
+}
+
+%end
 
 %hook CSAdjunctItemView
 
@@ -389,6 +511,9 @@ BOOL enableColorFlowSection;
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]]; // set artist name
             else if (!artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set album name
+
+            // [timeControlSlider setMaximumValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration]] doubleValue]];
+            // [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
 
             if (dict) {
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
