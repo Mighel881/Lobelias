@@ -29,7 +29,9 @@ UILabel* songTitleLabel;
 UILabel* artistNameLabel;
 UIButton* rewindButton;
 UIButton* skipButton;
-// UISlider* timeControlSlider;
+UISlider* timeControlSlider;
+UILabel* elapsedTimeLabel;
+UILabel* durationLabel;
 
 // Background
 NSString* backgroundAlphaValue = @"1.0";
@@ -121,6 +123,8 @@ BOOL skipButtonLibKittenSwitch = NO;
 BOOL skipButtonBorderLibKittenSwitch = NO;
 
 // Others
+BOOL fadeWhenNotificationsSwitch = NO;
+NSString* fadeWhenNotificationsAlphaValue = @"0.2";
 NSString* notificationPositionValue = @"0.0";
 
 @interface CSCoverSheetViewController : UIViewController

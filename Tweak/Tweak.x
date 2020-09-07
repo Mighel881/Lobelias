@@ -275,7 +275,7 @@ BOOL enableOthersSection;
 
     // if (!timeControlSlider) {
     //     timeControlSlider = [[UISlider alloc] init];
-    //     [timeControlSlider.widthAnchor constraintEqualToConstant:250.0].active = YES;
+    //     [timeControlSlider.widthAnchor constraintEqualToConstant:200.0].active = YES;
     //     [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
     //     [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
         
@@ -283,19 +283,51 @@ BOOL enableOthersSection;
     //     [timeControlSlider setContinuous:YES];
     //     [timeControlSlider setMinimumValue:0.0];
     //     [timeControlSlider setMaximumValue:1.0];
-    //     [timeControlSlider setHidden:NO];
+    //     [timeControlSlider setHidden:YES];
     //     if (![timeControlSlider isDescendantOfView:[self view]]) [[self view] addSubview:timeControlSlider];
         
     //     [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    //     [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:100.0].active = YES;
+    //     [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
+    // }
+
+    // elapsed time label
+    // if (!elapsedTimeLabel) {
+    //     elapsedTimeLabel = [[UILabel alloc] init];
+    //     [elapsedTimeLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
+    //      [elapsedTimeLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+    //     [elapsedTimeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //     [elapsedTimeLabel setTextColor:[UIColor whiteColor]];
+    //     [elapsedTimeLabel setFont:[UIFont systemFontOfSize:15]];
+    //     [elapsedTimeLabel setTextAlignment:NSTextAlignmentRight];
+    //     [elapsedTimeLabel setHidden:YES];
+    //     if (![elapsedTimeLabel isDescendantOfView:[self view]]) [[self view] addSubview:elapsedTimeLabel];
+
+    //     [elapsedTimeLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.leftAnchor constant:-30.0].active = YES;
+    //     [elapsedTimeLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
+    // }
+
+    // // duration label
+    // if (!durationLabel) {
+    //     durationLabel = [[UILabel alloc] init];
+    //     [durationLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
+    //      [durationLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+    //     [durationLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //     [durationLabel setTextColor:[UIColor whiteColor]];
+    //     [durationLabel setFont:[UIFont systemFontOfSize:15]];
+    //     [durationLabel setTextAlignment:NSTextAlignmentLeft];
+    //     [durationLabel setHidden:YES];
+    //     if (![durationLabel isDescendantOfView:[self view]]) [[self view] addSubview:durationLabel];
+
+    //     [durationLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.rightAnchor constant:30.0].active = YES;
+    //     [durationLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
     // }
 
 }
 
-// %new
-// - (void)setTime {
+%new
+- (void)setTime {
 
-// }
+}
 
 %new
 - (void)rewindSong { // rewind song
@@ -383,13 +415,13 @@ BOOL enableOthersSection;
 
 	%orig;
 
-    if ([notificationPositionValue doubleValue] == 0.0 || notificationCount <= 0) return;
+    if (!fadeWhenNotificationsSwitch || notificationCount <= 0) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [lsArtworkImage setAlpha:0.2];
-        [songTitleLabel setAlpha:0.2];
-        [artistNameLabel setAlpha:0.2];
-        [rewindButton setAlpha:0.2];
-        [skipButton setAlpha:0.2];
+        [lsArtworkImage setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
+        [songTitleLabel setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
+        [artistNameLabel setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
+        [rewindButton setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
+        [skipButton setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
     } completion:nil];
 
 }
@@ -398,7 +430,7 @@ BOOL enableOthersSection;
 
 	%orig;
 
-    if ([notificationPositionValue doubleValue] == 0.0 || notificationCount <= 0) return;
+    if (!fadeWhenNotificationsSwitch || notificationCount <= 0) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
@@ -416,6 +448,14 @@ BOOL enableOthersSection;
 - (void)didMoveToWindow { // lower notifications
 
     %orig;
+
+    if (fadeWhenNotificationsSwitch) {
+        [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
+        [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
+        [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
+        [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
+        [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
+    }
 
     if ([notificationPositionValue doubleValue] == 0.0) return;
     [self setFrame:self.frame];
@@ -488,7 +528,7 @@ BOOL enableOthersSection;
 
 - (unsigned long long)notificationCount { // get notifications count
 
-    if ([notificationPositionValue doubleValue] != 0.0) notificationCount = %orig;
+    if ([notificationPositionValue doubleValue] != 0.0 || fadeWhenNotificationsSwitch) notificationCount = %orig;
 
     return %orig;
 
@@ -519,8 +559,13 @@ BOOL enableOthersSection;
             else if (!artistNameShowArtistNameSwitch && artistNameShowAlbumNameSwitch)
                 [artistNameLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoAlbum]]]; // set album name
 
-            // [timeControlSlider setMaximumValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration]] doubleValue]];
-            // [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
+            // set time control slider maximum value
+            [timeControlSlider setMaximumValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration]] doubleValue]];
+            [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
+
+            // set elapsed time label and duration label
+            [elapsedTimeLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]]];
+            [durationLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration]]];
 
             if (dict) {
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
@@ -534,6 +579,9 @@ BOOL enableOthersSection;
                     [artistNameLabel setHidden:NO];
                     [rewindButton setHidden:NO];
                     [skipButton setHidden:NO];
+                    [timeControlSlider setHidden:NO];
+                    [elapsedTimeLabel setHidden:NO];
+                    [durationLabel setHidden:NO];
 
                     // get libKitten colors
                     UIColor* backgroundColor = [nena backgroundColor:currentArtwork];
@@ -553,6 +601,10 @@ BOOL enableOthersSection;
                     if (skipButtonBackgroundLibKittenSwitch) [skipButton setBackgroundColor:backgroundColor];
                     if (skipButtonLibKittenSwitch) [skipButton setTintColor:primaryColor];
                     if (skipButtonBorderLibKittenSwitch) [[skipButton layer] setBorderColor:[secondaryColor CGColor]];
+                    [timeControlSlider setMinimumTrackTintColor:primaryColor];
+                    [timeControlSlider setMaximumTrackTintColor:secondaryColor];
+                    [elapsedTimeLabel setTextColor:secondaryColor];
+                    [durationLabel setTextColor:secondaryColor];
                 }
             }
         } else {
@@ -563,6 +615,9 @@ BOOL enableOthersSection;
             [artistNameLabel setHidden:YES];
             [rewindButton setHidden:YES];
             [skipButton setHidden:YES];
+            [timeControlSlider setHidden:YES];
+            [elapsedTimeLabel setHidden:YES];
+            [durationLabel setHidden:YES];
         }
   	});
     
@@ -758,6 +813,8 @@ BOOL enableOthersSection;
     }
 
     if (enableOthersSection) {
+        [preferences registerBool:&fadeWhenNotificationsSwitch default:NO forKey:@"fadeWhenNotifications"];
+        [preferences registerObject:&fadeWhenNotificationsAlphaValue default:@"0.2" forKey:@"fadeWhenNotificationsAlpha"];
         [preferences registerObject:&notificationPositionValue default:@"0.0" forKey:@"notificationPosition"];
     }
 
