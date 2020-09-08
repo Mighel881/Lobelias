@@ -273,59 +273,62 @@ BOOL enableOthersSection;
         }
     }
 
-    // if (!timeControlSlider) {
-    //     timeControlSlider = [[UISlider alloc] init];
-    //     [timeControlSlider.widthAnchor constraintEqualToConstant:200.0].active = YES;
-    //     [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
-    //     [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
+    // time control slider
+    if (!timeControlSlider) {
+        timeControlSlider = [[UISlider alloc] init];
+        [timeControlSlider.widthAnchor constraintEqualToConstant:200.0].active = YES;
+        [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
+        [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-    //     [timeControlSlider addTarget:self action:@selector(setTime) forControlEvents:UIControlEventValueChanged];
-    //     [timeControlSlider setContinuous:YES];
-    //     [timeControlSlider setMinimumValue:0.0];
-    //     [timeControlSlider setMaximumValue:1.0];
-    //     [timeControlSlider setHidden:YES];
-    //     if (![timeControlSlider isDescendantOfView:[self view]]) [[self view] addSubview:timeControlSlider];
+        [timeControlSlider addTarget:self action:@selector(setTime) forControlEvents:UIControlEventValueChanged];
+        [timeControlSlider setContinuous:YES];
+        [timeControlSlider setMinimumValue:0.0];
+        [timeControlSlider setMaximumValue:1.0];
+        [timeControlSlider setHidden:YES];
+        if (![timeControlSlider isDescendantOfView:[self view]]) [[self view] addSubview:timeControlSlider];
         
-    //     [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    //     [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
-    // }
+        [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+        [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:145.0].active = YES;
+    }
 
     // elapsed time label
-    // if (!elapsedTimeLabel) {
-    //     elapsedTimeLabel = [[UILabel alloc] init];
-    //     [elapsedTimeLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
-    //      [elapsedTimeLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
-    //     [elapsedTimeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    //     [elapsedTimeLabel setTextColor:[UIColor whiteColor]];
-    //     [elapsedTimeLabel setFont:[UIFont systemFontOfSize:15]];
-    //     [elapsedTimeLabel setTextAlignment:NSTextAlignmentRight];
-    //     [elapsedTimeLabel setHidden:YES];
-    //     if (![elapsedTimeLabel isDescendantOfView:[self view]]) [[self view] addSubview:elapsedTimeLabel];
+    if (!elapsedTimeLabel) {
+        elapsedTimeLabel = [[UILabel alloc] init];
+        [elapsedTimeLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
+         [elapsedTimeLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+        [elapsedTimeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [elapsedTimeLabel setTextColor:[UIColor whiteColor]];
+        [elapsedTimeLabel setFont:[UIFont systemFontOfSize:15]];
+        [elapsedTimeLabel setTextAlignment:NSTextAlignmentRight];
+        [elapsedTimeLabel setHidden:YES];
+        if (![elapsedTimeLabel isDescendantOfView:[self view]]) [[self view] addSubview:elapsedTimeLabel];
 
-    //     [elapsedTimeLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.leftAnchor constant:-30.0].active = YES;
-    //     [elapsedTimeLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
-    // }
+        [elapsedTimeLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.leftAnchor constant:-30.0].active = YES;
+        [elapsedTimeLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:145.0].active = YES;
+    }
 
-    // // duration label
-    // if (!durationLabel) {
-    //     durationLabel = [[UILabel alloc] init];
-    //     [durationLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
-    //      [durationLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
-    //     [durationLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    //     [durationLabel setTextColor:[UIColor whiteColor]];
-    //     [durationLabel setFont:[UIFont systemFontOfSize:15]];
-    //     [durationLabel setTextAlignment:NSTextAlignmentLeft];
-    //     [durationLabel setHidden:YES];
-    //     if (![durationLabel isDescendantOfView:[self view]]) [[self view] addSubview:durationLabel];
+    // duration label
+    if (!durationLabel) {
+        durationLabel = [[UILabel alloc] init];
+        [durationLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
+         [durationLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+        [durationLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [durationLabel setTextColor:[UIColor whiteColor]];
+        [durationLabel setFont:[UIFont systemFontOfSize:15]];
+        [durationLabel setTextAlignment:NSTextAlignmentLeft];
+        [durationLabel setHidden:YES];
+        if (![durationLabel isDescendantOfView:[self view]]) [[self view] addSubview:durationLabel];
 
-    //     [durationLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.rightAnchor constant:30.0].active = YES;
-    //     [durationLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:150.0].active = YES;
-    // }
+        [durationLabel.centerXAnchor constraintEqualToAnchor:timeControlSlider.rightAnchor constant:30.0].active = YES;
+        [durationLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:145.0].active = YES;
+    }
 
 }
 
 %new
 - (void)setTime {
+
+    MRMediaRemoteSetElapsedTime([timeControlSlider value]);
 
 }
 
@@ -522,7 +525,6 @@ BOOL enableOthersSection;
 }
 
 %end
-
 
 %hook NCNotificationMasterList
 
