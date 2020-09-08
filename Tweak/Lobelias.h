@@ -3,10 +3,14 @@
 #import <MediaRemote/MediaRemote.h>
 #import "libcolorpicker.h"
 #import <Kitten/libKitten.h>
+#import <AudioToolbox/AudioServices.h>
 
 HBPreferences* preferences;
 NSDictionary *preferencesDictionary;
 libKitten* nena;
+UIColor* backgroundColor;
+UIColor* primaryColor;
+UIColor* secondaryColor;
 
 int notificationCount;
 
@@ -129,6 +133,7 @@ NSString* notificationPositionValue = @"0.0";
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)setTime;
+// - (void)updateTimeControl;
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
@@ -147,8 +152,9 @@ NSString* notificationPositionValue = @"0.0";
 + (id)sharedInstance;
 - (BOOL)isPaused;
 - (BOOL)isPlaying;
-- (BOOL)beginSeek:(int)arg1 eventSource:(long long)arg2;
 - (void)setNowPlayingInfo:(id)arg1;
 - (BOOL)changeTrack:(int)arg1 eventSource:(long long)arg2;
 - (BOOL)togglePlayPauseForEventSource:(long long)arg1;
+- (BOOL)toggleShuffleForEventSource:(long long)arg1;
+- (BOOL)toggleRepeatForEventSource:(long long)arg1;
 @end

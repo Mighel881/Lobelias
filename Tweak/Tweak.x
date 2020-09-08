@@ -193,7 +193,8 @@ BOOL enableOthersSection;
             [rewindButton.heightAnchor constraintEqualToConstant:55.0].active = YES;
             [rewindButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
-        [rewindButton addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchDown];
+        [rewindButton addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchUpInside];
+        [rewindButton addTarget:self action:@selector(toggleShuffle) forControlEvents:UIControlEventTouchUpOutside];
         UIImage* rewindImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/rewindImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [rewindButton setImage:rewindImage forState:UIControlStateNormal];
         [rewindButton setClipsToBounds:YES];
@@ -238,7 +239,8 @@ BOOL enableOthersSection;
             [skipButton.heightAnchor constraintEqualToConstant:55.0].active = YES;
             [skipButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
-        [skipButton addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchDown];
+        [skipButton addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchUpInside];
+        [skipButton addTarget:self action:@selector(toggleRepeat) forControlEvents:UIControlEventTouchUpOutside];
         UIImage* skipImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/skipImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [skipButton setImage:skipImage forState:UIControlStateNormal];
         [skipButton setClipsToBounds:YES];
@@ -326,11 +328,25 @@ BOOL enableOthersSection;
 }
 
 %new
-- (void)setTime {
+- (void)setTime { // set user selected time from slider
 
     MRMediaRemoteSetElapsedTime([timeControlSlider value]);
 
 }
+
+// %new
+// - (void)updateTimeControl {
+
+//     AudioServicesPlaySystemSound(1519);
+//     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) { // update slider and elapsed time label
+//         if (information) {
+//             NSDictionary* dict = (__bridge NSDictionary *)information;
+//             [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
+//             [elapsedTimeLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]]];
+//         }
+//     });
+
+// }
 
 %new
 - (void)rewindSong { // rewind song
@@ -366,7 +382,9 @@ BOOL enableOthersSection;
 - (void)pausePlaySong { // pause/play song
 
 	[[%c(SBMediaController) sharedInstance] togglePlayPauseForEventSource:0];
-
+    
+    pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [pauseImage setTintColor:secondaryColor];
     if (![[%c(SBMediaController) sharedInstance] isPaused]) {
         [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
             [pauseImage setAlpha:1.0];
@@ -393,6 +411,97 @@ BOOL enableOthersSection;
             lsArtworkImage.transform = CGAffineTransformMakeScale(1, 1);
         } completion:nil];
     }];
+
+}
+
+%new
+- (void)toggleShuffle { // toggle shuffle
+
+    [[%c(SBMediaController) sharedInstance] toggleShuffleForEventSource:0];
+
+    if ([[%c(SBMediaController) sharedInstance] isPaused]) {
+        [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{ // if paused fade image
+                [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/shuffle.png"]];
+        } completion:nil];
+    } else {
+        [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/shuffle.png"]];
+    }
+
+    pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [pauseImage setTintColor:secondaryColor];
+    [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // shuffle image fade animation
+        [pauseImage setAlpha:1.0];
+        pauseImage.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    } completion:nil];
+    [UIView animateWithDuration:0.4 delay:0.15 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [pauseImage setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.4]];
+    } completion:nil];
+    if (![[%c(SBMediaController) sharedInstance] isPaused]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // shuffle image fade animation
+                [pauseImage setAlpha:0.0];
+                pauseImage.transform = CGAffineTransformMakeScale(0.9, 0.9);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    [pauseImage setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.0]];
+                } completion:^(BOOL finished) {
+                    [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+                }];
+            }];
+        });
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+            } completion:nil];
+        });
+    }
+
+}
+
+%new
+- (void)toggleRepeat { // toggle repeat
+
+    [[%c(SBMediaController) sharedInstance] toggleRepeatForEventSource:0];
+
+    if ([[%c(SBMediaController) sharedInstance] isPaused]) {
+        [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{ // if paused fade image
+                [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/repeat.png"]];
+        } completion:nil];
+    } else {
+        [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/repeat.png"]];
+    }
+
+    pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [pauseImage setTintColor:secondaryColor];
+    [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/repeat.png"]];
+    [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
+        [pauseImage setAlpha:1.0];
+        pauseImage.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    } completion:nil];
+    [UIView animateWithDuration:0.4 delay:0.15 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [pauseImage setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.4]];
+    } completion:nil];
+    if (![[%c(SBMediaController) sharedInstance] isPaused]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // shuffle image fade animation
+                [pauseImage setAlpha:0.0];
+                pauseImage.transform = CGAffineTransformMakeScale(0.9, 0.9);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.15 delay:0 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    [pauseImage setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.0]];
+                } completion:^(BOOL finished) {
+                    [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+                }];
+            }];
+        });
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+            } completion:nil];
+        });
+    }
 
 }
 
@@ -544,7 +653,7 @@ BOOL enableOthersSection;
 
 %hook SBMediaController
 
-- (void)setNowPlayingInfo:(id)arg1 { // get and set the artwork
+- (void)setNowPlayingInfo:(id)arg1 { // set now playing info
 
     %orig;
 
@@ -566,8 +675,13 @@ BOOL enableOthersSection;
             [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
 
             // set elapsed time label and duration label
-            [elapsedTimeLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]]];
-            [durationLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration]]];
+            int durationMinutes = ([[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration] intValue] / 60) % 60;
+            int durationSeconds = [[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoDuration] intValue] % 60;
+            int elapsedMinutes = ([[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime] intValue] / 60) % 60;
+            int elapsedSeconds = [[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime] intValue] % 60;
+                        
+            [durationLabel setText:[NSString stringWithFormat:@"%02d:%02d", durationMinutes, durationSeconds]];
+            [elapsedTimeLabel setText:[NSString stringWithFormat:@"%02d:%02d", elapsedMinutes, elapsedSeconds]];
 
             if (dict) {
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
@@ -586,9 +700,9 @@ BOOL enableOthersSection;
                     [durationLabel setHidden:NO];
 
                     // get libKitten colors
-                    UIColor* backgroundColor = [nena backgroundColor:currentArtwork];
-                    UIColor* primaryColor = [nena primaryColor:currentArtwork];
-                    UIColor* secondaryColor = [nena secondaryColor:currentArtwork];
+                    backgroundColor = [nena backgroundColor:currentArtwork];
+                    primaryColor = [nena primaryColor:currentArtwork];
+                    secondaryColor = [nena secondaryColor:currentArtwork];
 
                     // set libKitten colors
                     if (pauseImageLibKittenSwitch) [pauseImage setTintColor:secondaryColor];
@@ -609,7 +723,7 @@ BOOL enableOthersSection;
                     [durationLabel setTextColor:secondaryColor];
                 }
             }
-        } else {
+        } else { // hide everything if not playing
             [lsArtworkBackgroundImageView setHidden:YES];
             [lsArtworkImage setHidden:YES];
             [lsBlurView setHidden:YES];
@@ -625,10 +739,12 @@ BOOL enableOthersSection;
     
 }
 
-- (void)_mediaRemoteNowPlayingApplicationIsPlayingDidChange:(id)arg1 {
+- (void)_mediaRemoteNowPlayingApplicationIsPlayingDidChange:(id)arg1 { // show pause image when event source has paused playback
 
     %orig;
 
+    pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [pauseImage setTintColor:secondaryColor];
     if ([self isPaused]) {
         [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image animation
             [pauseImage setAlpha:1.0];
