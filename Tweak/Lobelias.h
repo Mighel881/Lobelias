@@ -137,6 +137,8 @@ NSString* notificationPositionValue = @"0.0";
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
+- (void)toggleShuffle;
+- (void)toggleRepeat;
 @end
 
 @interface NCNotificationListView : UIView
@@ -157,4 +159,5 @@ NSString* notificationPositionValue = @"0.0";
 - (BOOL)togglePlayPauseForEventSource:(long long)arg1;
 - (BOOL)toggleShuffleForEventSource:(long long)arg1;
 - (BOOL)toggleRepeatForEventSource:(long long)arg1;
+- (BOOL)likeTrackForEventSource:(long long)arg1;
 @end

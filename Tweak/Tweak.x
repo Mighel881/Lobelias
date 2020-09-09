@@ -474,7 +474,6 @@ BOOL enableOthersSection;
 
     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [pauseImage setTintColor:secondaryColor];
-    [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/repeat.png"]];
     [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
         [pauseImage setAlpha:1.0];
         pauseImage.transform = CGAffineTransformMakeScale(1.0, 1.0);
