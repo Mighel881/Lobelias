@@ -251,7 +251,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>defaults</key>
 			<string>love.litten.lobeliaspreferences</string>
 			<key>key</key>

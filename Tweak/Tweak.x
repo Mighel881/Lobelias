@@ -78,34 +78,34 @@ BOOL enableOthersSection;
     }
     
     // pause image
-    if (!pauseImage) {
-        if (customArtworkPositionAndSizeSwitch) {
-            pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
-        } else {
-            pauseImage = [[UIImageView alloc] init];
-            [pauseImage setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [pauseImage.widthAnchor constraintEqualToConstant:230.0].active = YES;
-            [pauseImage.heightAnchor constraintEqualToConstant:230.0].active = YES;
-        }
-        [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
-        [pauseImage setClipsToBounds:YES];
-        [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
-        pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        if (pauseImageCustomColorSwitch) {
-            NSString* pauseImageColorHex = [preferencesDictionary objectForKey:@"pauseImageColor"];
-            [pauseImage setTintColor:LCPParseColorString(pauseImageColorHex, @"#ffffff:1.000000")];
-        } else {
-            [pauseImage setTintColor:[UIColor whiteColor]];
-        }
-        [pauseImage setAlpha:0.0];
-        [pauseImage setHidden:NO];
-        if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
+    // if (!pauseImage) {
+    //     if (customArtworkPositionAndSizeSwitch) {
+    //         pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
+    //     } else {
+    //         pauseImage = [[UIImageView alloc] init];
+    //         [pauseImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //         [pauseImage.widthAnchor constraintEqualToConstant:230.0].active = YES;
+    //         [pauseImage.heightAnchor constraintEqualToConstant:230.0].active = YES;
+    //     }
+    //     [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
+    //     [pauseImage setClipsToBounds:YES];
+    //     [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+    //     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    //     if (pauseImageCustomColorSwitch) {
+    //         NSString* pauseImageColorHex = [preferencesDictionary objectForKey:@"pauseImageColor"];
+    //         [pauseImage setTintColor:LCPParseColorString(pauseImageColorHex, @"#ffffff:1.000000")];
+    //     } else {
+    //         [pauseImage setTintColor:[UIColor whiteColor]];
+    //     }
+    //     [pauseImage setAlpha:0.0];
+    //     [pauseImage setHidden:NO];
+    //     if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
 
-        if (!customArtworkPositionAndSizeSwitch) {
-            [pauseImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-            [pauseImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
-        }
-    }
+    //     if (!customArtworkPositionAndSizeSwitch) {
+    //         [pauseImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+    //         [pauseImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
+    //     }
+    // }
     
     // song title
     if (!songTitleLabel && enableSongTitleSection) {
@@ -871,8 +871,8 @@ BOOL enableOthersSection;
         [preferences registerObject:&artworkBorderWidthValue default:@"4.0" forKey:@"artworkBorderWidth"];
         [preferences registerBool:&artworkBorderCustomColorSwitch default:NO forKey:@"artworkBorderCustomColor"];
         [preferences registerBool:&pauseImageCustomColorSwitch default:NO forKey:@"pauseImageCustomColor"];
-        [preferences registerBool:&artworkBorderLibKittenSwitch default:NO forKey:@"artworkBorderLibKitten"];
-        [preferences registerBool:&pauseImageLibKittenSwitch default:NO forKey:@"pauseImageLibKitten"];
+        [preferences registerBool:&artworkBorderLibKittenSwitch default:YES forKey:@"artworkBorderLibKitten"];
+        [preferences registerBool:&pauseImageLibKittenSwitch default:YES forKey:@"pauseImageLibKitten"];
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
         [preferences registerBool:&artworkHapticFeedbackSwitch default:NO forKey:@"artworkHapticFeedback"];
     }
@@ -888,7 +888,7 @@ BOOL enableOthersSection;
         [preferences registerObject:&songTitleCustomFontValue default:@"" forKey:@"songTitleCustomFont"];
         [preferences registerObject:&songTitleFontSizeValue default:@"24.0" forKey:@"songTitleFontSize"];
         [preferences registerBool:&songTitleCustomColorSwitch default:NO forKey:@"songTitleCustomColor"];
-        [preferences registerBool:&songTitleLibKittenSwitch default:NO forKey:@"songTitleLibKitten"];
+        [preferences registerBool:&songTitleLibKittenSwitch default:YES forKey:@"songTitleLibKitten"];
         [preferences registerBool:&songTitleShadowSwitch default:NO forKey:@"songTitleShadow"];
         [preferences registerBool:&songTitleShadowLibKittenSwitch default:NO forKey:@"songTitleShadowLibKitten"];
         [preferences registerObject:&songTitleShadowRadiusValue default:@"0.0" forKey:@"songTitleShadowRadius"];
@@ -910,7 +910,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&artistNameShowArtistNameSwitch default:YES forKey:@"artistNameShowArtistName"];
         [preferences registerBool:&artistNameShowAlbumNameSwitch default:YES forKey:@"artistNameShowAlbumName"];
         [preferences registerBool:&artistNameCustomColorSwitch default:NO forKey:@"artistNameCustomColor"];
-        [preferences registerBool:&artistNameLibKittenSwitch default:NO forKey:@"artistNameLibKitten"];
+        [preferences registerBool:&artistNameLibKittenSwitch default:YES forKey:@"artistNameLibKitten"];
         [preferences registerBool:&artistNameShadowSwitch default:NO forKey:@"artistNameShadow"];
         [preferences registerBool:&artistNameShadowLibKittenSwitch default:NO forKey:@"artistNameShadowLibKitten"];
         [preferences registerObject:&artistNameShadowRadiusValue default:@"0.0" forKey:@"artistNameShadowRadius"];
@@ -932,8 +932,8 @@ BOOL enableOthersSection;
         [preferences registerBool:&rewindButtonBackgroundCustomColorSwitch default:NO forKey:@"rewindButtonBackgroundCustomColor"];
         [preferences registerBool:&rewindButtonCustomColorSwitch default:NO forKey:@"rewindButtonCustomColor"];
         [preferences registerBool:&rewindButtonBorderCustomColorSwitch default:NO forKey:@"rewindButtonBorderCustomColor"];
-        [preferences registerBool:&rewindButtonBackgroundLibKittenSwitch default:NO forKey:@"rewindButtonBackgroundLibKitten"];
-        [preferences registerBool:&rewindButtonLibKittenSwitch default:NO forKey:@"rewindButtonLibKitten"];
+        [preferences registerBool:&rewindButtonBackgroundLibKittenSwitch default:YES forKey:@"rewindButtonBackgroundLibKitten"];
+        [preferences registerBool:&rewindButtonLibKittenSwitch default:YES forKey:@"rewindButtonLibKitten"];
         [preferences registerBool:&rewindButtonBorderLibKittenSwitch default:NO forKey:@"rewindButtonBorderLibKitten"];
         [preferences registerBool:&swipeRewindButtonToToggleShuffleSwitch default:YES forKey:@"swipeRewindButtonToToggleShuffle"];
         [preferences registerBool:&rewindButtonHapticFeedbackSwitch default:NO forKey:@"rewindButtonHapticFeedback"];
@@ -952,14 +952,15 @@ BOOL enableOthersSection;
         [preferences registerBool:&skipButtonBackgroundCustomColorSwitch default:NO forKey:@"skipButtonBackgroundCustomColor"];
         [preferences registerBool:&skipButtonCustomColorSwitch default:NO forKey:@"skipButtonCustomColor"];
         [preferences registerBool:&skipButtonBorderCustomColorSwitch default:NO forKey:@"skipButtonBorderCustomColor"];
-        [preferences registerBool:&skipButtonBackgroundLibKittenSwitch default:NO forKey:@"skipButtonBackgroundLibKitten"];
-        [preferences registerBool:&skipButtonLibKittenSwitch default:NO forKey:@"skipButtonLibKitten"];
+        [preferences registerBool:&skipButtonBackgroundLibKittenSwitch default:YES forKey:@"skipButtonBackgroundLibKitten"];
+        [preferences registerBool:&skipButtonLibKittenSwitch default:YES forKey:@"skipButtonLibKitten"];
+        [preferences registerBool:&skipButtonBorderLibKittenSwitch default:YES forKey:@"skipButtonBorderLibKitten"];
         [preferences registerBool:&swipeSkipButtonToToggleRepeatSwitch default:YES forKey:@"swipeSkipButtonToToggleRepeat"];
         [preferences registerBool:&skipButtonHapticFeedbackSwitch default:NO forKey:@"skipButtonHapticFeedback"];
     }
 
     if (enableOthersSection) {
-        [preferences registerBool:&fadeWhenNotificationsSwitch default:NO forKey:@"fadeWhenNotifications"];
+        [preferences registerBool:&fadeWhenNotificationsSwitch default:YES forKey:@"fadeWhenNotifications"];
         [preferences registerObject:&fadeWhenNotificationsAlphaValue default:@"0.2" forKey:@"fadeWhenNotificationsAlpha"];
         [preferences registerObject:&notificationPositionValue default:@"0.0" forKey:@"notificationPosition"];
     }
