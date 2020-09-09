@@ -57,6 +57,7 @@ BOOL pauseImageCustomColorSwitch = NO;
 BOOL artworkBorderLibKittenSwitch = NO;
 BOOL pauseImageLibKittenSwitch = NO;
 BOOL artworkTransitionSwitch = NO;
+BOOL artworkHapticFeedbackSwitch = NO;
 
 // Song Title
 BOOL customSongTitlePositionAndSizeSwitch = NO;
@@ -112,6 +113,7 @@ BOOL rewindButtonBackgroundLibKittenSwitch = NO;
 BOOL rewindButtonLibKittenSwitch = NO;
 BOOL rewindButtonBorderLibKittenSwitch = NO;
 BOOL swipeRewindButtonToToggleShuffleSwitch = YES;
+BOOL rewindButtonHapticFeedbackSwitch = NO;
 
 // Skip Button
 BOOL customSkipButtonPositionAndSizeSwitch = NO;
@@ -129,6 +131,7 @@ BOOL skipButtonBackgroundLibKittenSwitch = NO;
 BOOL skipButtonLibKittenSwitch = NO;
 BOOL skipButtonBorderLibKittenSwitch = NO;
 BOOL swipeSkipButtonToToggleRepeatSwitch = YES;
+BOOL skipButtonHapticFeedbackSwitch = NO;
 
 // Others
 BOOL fadeWhenNotificationsSwitch = NO;

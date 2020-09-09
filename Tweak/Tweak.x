@@ -337,7 +337,6 @@ BOOL enableOthersSection;
 // %new
 // - (void)updateTimeControl {
 
-//     AudioServicesPlaySystemSound(1519);
 //     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) { // update slider and elapsed time label
 //         if (information) {
 //             NSDictionary* dict = (__bridge NSDictionary *)information;
@@ -361,6 +360,8 @@ BOOL enableOthersSection;
         } completion:nil];
     }];
 
+    if (rewindButtonHapticFeedbackSwitch) AudioServicesPlaySystemSound(1519);
+
 }
 
 %new
@@ -375,6 +376,8 @@ BOOL enableOthersSection;
             skipButton.transform = CGAffineTransformMakeScale(1, 1);
         } completion:nil];
     }];
+
+    if (skipButtonHapticFeedbackSwitch) AudioServicesPlaySystemSound(1519);
 
 }
 
@@ -411,6 +414,8 @@ BOOL enableOthersSection;
             lsArtworkImage.transform = CGAffineTransformMakeScale(1, 1);
         } completion:nil];
     }];
+
+    if (artworkHapticFeedbackSwitch) AudioServicesPlaySystemSound(1519);
 
 }
 
@@ -865,6 +870,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&artworkBorderLibKittenSwitch default:NO forKey:@"artworkBorderLibKitten"];
         [preferences registerBool:&pauseImageLibKittenSwitch default:NO forKey:@"pauseImageLibKitten"];
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
+        [preferences registerBool:&artworkHapticFeedbackSwitch default:NO forKey:@"artworkHapticFeedback"];
     }
 
     // Song Title
@@ -926,6 +932,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&rewindButtonLibKittenSwitch default:NO forKey:@"rewindButtonLibKitten"];
         [preferences registerBool:&rewindButtonBorderLibKittenSwitch default:NO forKey:@"rewindButtonBorderLibKitten"];
         [preferences registerBool:&swipeRewindButtonToToggleShuffleSwitch default:YES forKey:@"swipeRewindButtonToToggleShuffle"];
+        [preferences registerBool:&rewindButtonHapticFeedbackSwitch default:NO forKey:@"rewindButtonHapticFeedback"];
     }
 
     // Skip Button
@@ -944,6 +951,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&skipButtonBackgroundLibKittenSwitch default:NO forKey:@"skipButtonBackgroundLibKitten"];
         [preferences registerBool:&skipButtonLibKittenSwitch default:NO forKey:@"skipButtonLibKitten"];
         [preferences registerBool:&swipeSkipButtonToToggleRepeatSwitch default:YES forKey:@"swipeSkipButtonToToggleRepeat"];
+        [preferences registerBool:&skipButtonHapticFeedbackSwitch default:NO forKey:@"skipButtonHapticFeedback"];
     }
 
     if (enableOthersSection) {

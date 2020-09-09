@@ -341,6 +341,20 @@
 			<key>PostNotification</key>
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>artworkHapticFeedback</string>
+			<key>label</key>
+			<string>Haptic Feedback</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
 
 	</array>
 	<key>title</key>
