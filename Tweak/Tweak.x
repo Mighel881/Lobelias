@@ -684,9 +684,23 @@ BOOL enableOthersSection;
 
             if (dict) {
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-                    // set images and unhide elements
-                    [lsArtworkBackgroundImageView setImage:currentArtwork];
-                    [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
+                    // set images
+                    if (!artworkTransitionSwitch) {
+                        [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
+                    } else {
+                        [UIView transitionWithView:lsArtworkImage duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                            [lsArtworkImage setImage:currentArtwork forState:UIControlStateNormal];
+                        } completion:nil];
+                    }
+                    if (!artworkBackgroundTransitionSwitch) {
+                        [lsArtworkBackgroundImageView setImage:currentArtwork];
+                    } else {
+                        [UIView transitionWithView:lsArtworkBackgroundImageView duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                            [lsArtworkBackgroundImageView setImage:currentArtwork];
+                        } completion:nil];
+                    }
+
+                    // and unhide elements
                     [lsArtworkBackgroundImageView setHidden:NO];
                     [lsArtworkImage setHidden:NO];
                     [lsBlurView setHidden:NO];
@@ -833,6 +847,7 @@ BOOL enableOthersSection;
         [preferences registerObject:&backgroundAlphaValue default:@"1.0" forKey:@"backgroundAlpha"];
         [preferences registerObject:&backgroundBlurValue default:@"3" forKey:@"backgroundBlur"];
         [preferences registerObject:&backgroundBlurAlphaValue default:@"1.0" forKey:@"backgroundBlurAlpha"];
+        [preferences registerBool:&artworkBackgroundTransitionSwitch default:NO forKey:@"artworkBackgroundTransition"];
     }
 
     // Artwork
@@ -849,6 +864,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&pauseImageCustomColorSwitch default:NO forKey:@"pauseImageCustomColor"];
         [preferences registerBool:&artworkBorderLibKittenSwitch default:NO forKey:@"artworkBorderLibKitten"];
         [preferences registerBool:&pauseImageLibKittenSwitch default:NO forKey:@"pauseImageLibKitten"];
+        [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
     }
 
     // Song Title

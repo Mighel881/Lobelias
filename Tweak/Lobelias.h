@@ -41,6 +41,7 @@ UILabel* durationLabel;
 NSString* backgroundAlphaValue = @"1.0";
 NSString* backgroundBlurValue = @"3";
 NSString* backgroundBlurAlphaValue = @"1.0";
+BOOL artworkBackgroundTransitionSwitch = NO;
 
 // Artwork
 BOOL customArtworkPositionAndSizeSwitch = NO;
@@ -55,6 +56,7 @@ BOOL artworkBorderCustomColorSwitch = NO;
 BOOL pauseImageCustomColorSwitch = NO;
 BOOL artworkBorderLibKittenSwitch = NO;
 BOOL pauseImageLibKittenSwitch = NO;
+BOOL artworkTransitionSwitch = NO;
 
 // Song Title
 BOOL customSongTitlePositionAndSizeSwitch = NO;
