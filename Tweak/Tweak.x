@@ -459,6 +459,8 @@ BOOL enableOthersSection;
             [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                 [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
             } completion:nil];
+            pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [pauseImage setTintColor:secondaryColor];
         });
     }
 
@@ -504,6 +506,8 @@ BOOL enableOthersSection;
             [UIView transitionWithView:pauseImage duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                 [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
             } completion:nil];
+            pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [pauseImage setTintColor:secondaryColor];
         });
     }
 
