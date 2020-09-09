@@ -194,7 +194,7 @@ BOOL enableOthersSection;
             [rewindButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
         [rewindButton addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchUpInside];
-        [rewindButton addTarget:self action:@selector(toggleShuffle) forControlEvents:UIControlEventTouchUpOutside];
+        if (swipeRewindButtonToToggleShuffleSwitch) [rewindButton addTarget:self action:@selector(toggleShuffle) forControlEvents:UIControlEventTouchUpOutside];
         UIImage* rewindImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/rewindImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [rewindButton setImage:rewindImage forState:UIControlStateNormal];
         [rewindButton setClipsToBounds:YES];
@@ -240,7 +240,7 @@ BOOL enableOthersSection;
             [skipButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         }
         [skipButton addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchUpInside];
-        [skipButton addTarget:self action:@selector(toggleRepeat) forControlEvents:UIControlEventTouchUpOutside];
+        if (swipeSkipButtonToToggleRepeatSwitch) [skipButton addTarget:self action:@selector(toggleRepeat) forControlEvents:UIControlEventTouchUpOutside];
         UIImage* skipImage = [[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/skipImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [skipButton setImage:skipImage forState:UIControlStateNormal];
         [skipButton setClipsToBounds:YES];
@@ -909,6 +909,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&rewindButtonBackgroundLibKittenSwitch default:NO forKey:@"rewindButtonBackgroundLibKitten"];
         [preferences registerBool:&rewindButtonLibKittenSwitch default:NO forKey:@"rewindButtonLibKitten"];
         [preferences registerBool:&rewindButtonBorderLibKittenSwitch default:NO forKey:@"rewindButtonBorderLibKitten"];
+        [preferences registerBool:&swipeRewindButtonToToggleShuffleSwitch default:YES forKey:@"swipeRewindButtonToToggleShuffle"];
     }
 
     // Skip Button
@@ -926,7 +927,7 @@ BOOL enableOthersSection;
         [preferences registerBool:&skipButtonBorderCustomColorSwitch default:NO forKey:@"skipButtonBorderCustomColor"];
         [preferences registerBool:&skipButtonBackgroundLibKittenSwitch default:NO forKey:@"skipButtonBackgroundLibKitten"];
         [preferences registerBool:&skipButtonLibKittenSwitch default:NO forKey:@"skipButtonLibKitten"];
-        [preferences registerBool:&skipButtonBorderLibKittenSwitch default:NO forKey:@"skipButtonBorderLibKitten"];
+        [preferences registerBool:&swipeSkipButtonToToggleRepeatSwitch default:YES forKey:@"swipeSkipButtonToToggleRepeat"];
     }
 
     if (enableOthersSection) {

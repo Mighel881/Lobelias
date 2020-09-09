@@ -370,6 +370,31 @@
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>
 
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Miscellaneous</string>
+			<key>footerText</key>
+			<string>Swipe Button To Toggle Repeat</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>swipeSkipButtonToToggleRepeat</string>
+			<key>label</key>
+			<string>Repeat Swipe</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+
 	</array>
 	<key>title</key>
 	<string>Lobelias</string>

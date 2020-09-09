@@ -109,6 +109,7 @@ BOOL rewindButtonBorderCustomColorSwitch = NO;
 BOOL rewindButtonBackgroundLibKittenSwitch = NO;
 BOOL rewindButtonLibKittenSwitch = NO;
 BOOL rewindButtonBorderLibKittenSwitch = NO;
+BOOL swipeRewindButtonToToggleShuffleSwitch = YES;
 
 // Skip Button
 BOOL customSkipButtonPositionAndSizeSwitch = NO;
@@ -125,6 +126,7 @@ BOOL skipButtonBorderCustomColorSwitch = NO;
 BOOL skipButtonBackgroundLibKittenSwitch = NO;
 BOOL skipButtonLibKittenSwitch = NO;
 BOOL skipButtonBorderLibKittenSwitch = NO;
+BOOL swipeSkipButtonToToggleRepeatSwitch = YES;
 
 // Others
 BOOL fadeWhenNotificationsSwitch = NO;
@@ -159,5 +161,4 @@ NSString* notificationPositionValue = @"0.0";
 - (BOOL)togglePlayPauseForEventSource:(long long)arg1;
 - (BOOL)toggleShuffleForEventSource:(long long)arg1;
 - (BOOL)toggleRepeatForEventSource:(long long)arg1;
-- (BOOL)likeTrackForEventSource:(long long)arg1;
 @end
