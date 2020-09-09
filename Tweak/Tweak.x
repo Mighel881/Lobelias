@@ -78,34 +78,22 @@ BOOL enableOthersSection;
     }
     
     // pause image
-    // if (!pauseImage) {
-    //     if (customArtworkPositionAndSizeSwitch) {
-    //         pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
-    //     } else {
-    //         pauseImage = [[UIImageView alloc] init];
-    //         [pauseImage setTranslatesAutoresizingMaskIntoConstraints:NO];
-    //         [pauseImage.widthAnchor constraintEqualToConstant:230.0].active = YES;
-    //         [pauseImage.heightAnchor constraintEqualToConstant:230.0].active = YES;
-    //     }
-    //     [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
-    //     [pauseImage setClipsToBounds:YES];
-    //     [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
-    //     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    //     if (pauseImageCustomColorSwitch) {
-    //         NSString* pauseImageColorHex = [preferencesDictionary objectForKey:@"pauseImageColor"];
-    //         [pauseImage setTintColor:LCPParseColorString(pauseImageColorHex, @"#ffffff:1.000000")];
-    //     } else {
-    //         [pauseImage setTintColor:[UIColor whiteColor]];
-    //     }
-    //     [pauseImage setAlpha:0.0];
-    //     [pauseImage setHidden:NO];
-    //     if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
-
-    //     if (!customArtworkPositionAndSizeSwitch) {
-    //         [pauseImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    //         [pauseImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
-    //     }
-    // }
+    if (!pauseImage) {
+        pauseImage = [[UIImageView alloc] initWithFrame:[lsArtworkImage bounds]];
+        [pauseImage setContentMode:UIViewContentModeScaleAspectFit];
+        [pauseImage setClipsToBounds:YES];
+        [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/pauseImage.png"]];
+        pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        if (pauseImageCustomColorSwitch) {
+            NSString* pauseImageColorHex = [preferencesDictionary objectForKey:@"pauseImageColor"];
+            [pauseImage setTintColor:LCPParseColorString(pauseImageColorHex, @"#ffffff:1.000000")];
+        } else {
+            [pauseImage setTintColor:[UIColor whiteColor]];
+        }
+        [pauseImage setAlpha:0.0];
+        [pauseImage setHidden:NO];
+        if (![pauseImage isDescendantOfView:lsArtworkImage]) [lsArtworkImage addSubview:pauseImage];
+    }
     
     // song title
     if (!songTitleLabel && enableSongTitleSection) {
@@ -386,6 +374,7 @@ BOOL enableOthersSection;
 
 	[[%c(SBMediaController) sharedInstance] togglePlayPauseForEventSource:0];
     
+    [pauseImage setFrame:[lsArtworkImage bounds]];
     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [pauseImage setTintColor:secondaryColor];
     if (![[%c(SBMediaController) sharedInstance] isPaused]) {
@@ -432,6 +421,7 @@ BOOL enableOthersSection;
         [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/shuffle.png"]];
     }
 
+    [pauseImage setFrame:[lsArtworkImage bounds]];
     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [pauseImage setTintColor:secondaryColor];
     [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // shuffle image fade animation
@@ -479,6 +469,7 @@ BOOL enableOthersSection;
         [pauseImage setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/LobeliasPrefs.bundle/repeat.png"]];
     }
 
+    [pauseImage setFrame:[lsArtworkImage bounds]];
     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [pauseImage setTintColor:secondaryColor];
     [UIView animateWithDuration:0.15 delay:0.1 usingSpringWithDamping:400 initialSpringVelocity:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{ // pause image fade animation
@@ -765,6 +756,7 @@ BOOL enableOthersSection;
 
     %orig;
 
+    [pauseImage setFrame:[lsArtworkImage bounds]];
     pauseImage.image = [pauseImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [pauseImage setTintColor:secondaryColor];
     if ([self isPaused]) {
