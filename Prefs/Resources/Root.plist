@@ -46,16 +46,6 @@
  			<key>LIASub</key>
  			<string>artworkSub</string>
  		</dict>
-		 <dict>
- 			<key>cell</key>
- 			<string>PSLinkCell</string>
- 			<key>label</key>
- 			<string>Time Control</string>
- 			<key>detail</key>
- 			<string>LIATimeControlSubPrefsListController</string>
- 			<key>LIASub</key>
- 			<string>timeControlSub</string>
- 		</dict>
 		<dict>
  			<key>cell</key>
  			<string>PSLinkCell</string>
