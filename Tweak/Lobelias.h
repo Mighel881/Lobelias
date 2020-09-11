@@ -11,12 +11,14 @@ libKitten* nena;
 UIColor* backgroundColor;
 UIColor* primaryColor;
 UIColor* secondaryColor;
+NSTimer* timer;
 
 int notificationCount;
 
 extern BOOL enabled;
 extern BOOL enableBackgroundSection;
 extern BOOL enableArtworkSection;
+extern BOOL enableTimeControlSection;
 extern BOOL enableSongTitleSection;
 extern BOOL enableArtistNameSection;
 extern BOOL enableRewindButtonSection;
@@ -58,6 +60,18 @@ BOOL artworkBorderLibKittenSwitch = YES;
 BOOL pauseImageLibKittenSwitch = YES;
 BOOL artworkTransitionSwitch = NO;
 BOOL artworkHapticFeedbackSwitch = NO;
+
+// Time Control
+BOOL customTimeControlPositionAndSizeSwitch = NO;
+NSString* customTimeControlXAxisValue = @"0.0";
+NSString* customTimeControlYAxisValue = @"0.0";
+NSString* customTimeControlWidthValue = @"230.0";
+NSString* customTimeControlHeightValue = @"230.0";
+BOOL showElapsedTimeLabelSwitch = YES;
+BOOL showDurationTimeLabelSwitch = YES;
+NSString* timeControlAlphaValue = @"1.0";
+NSString* timeControlElapsedLabelAlphaValue = @"1.0";
+NSString* timeControlDurationLabelAlphaValue = @"1.0";
 
 // Song Title
 BOOL customSongTitlePositionAndSizeSwitch = NO;
@@ -140,7 +154,7 @@ NSString* notificationPositionValue = @"0.0";
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)setTime;
-// - (void)updateTimeControl;
+- (void)updateTimeControl;
 - (void)rewindSong;
 - (void)skipSong;
 - (void)pausePlaySong;
@@ -148,7 +162,7 @@ NSString* notificationPositionValue = @"0.0";
 - (void)toggleRepeat;
 @end
 
-@interface NCNotificationListView : UIView
+@interface NCNotificationListView : UIScrollView
 @end
 
 @interface NCNotificationListHeaderTitleView : UIView

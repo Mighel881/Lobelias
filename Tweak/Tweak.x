@@ -3,6 +3,7 @@
 BOOL enabled;
 BOOL enableBackgroundSection;
 BOOL enableArtworkSection;
+BOOL enableTimeControlSection;
 BOOL enableSongTitleSection;
 BOOL enableArtistNameSection;
 BOOL enableRewindButtonSection;
@@ -264,32 +265,36 @@ BOOL enableOthersSection;
     }
 
     // time control slider
-    if (!timeControlSlider) {
-        timeControlSlider = [[UISlider alloc] init];
-        [timeControlSlider.widthAnchor constraintEqualToConstant:200.0].active = YES;
-        [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
-        [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
-        
-        [timeControlSlider addTarget:self action:@selector(setTime) forControlEvents:UIControlEventValueChanged];
-        [timeControlSlider setContinuous:YES];
-        [timeControlSlider setMinimumValue:0.0];
-        [timeControlSlider setMaximumValue:1.0];
+    if (!timeControlSlider && enableTimeControlSection) {
+        if (customTimeControlPositionAndSizeSwitch) {
+            timeControlSlider = [[UISlider alloc] initWithFrame:CGRectMake([customTimeControlXAxisValue doubleValue], [customTimeControlYAxisValue doubleValue], [customTimeControlWidthValue doubleValue], [customTimeControlHeightValue doubleValue])];
+        } else {
+            timeControlSlider = [[UISlider alloc] init];
+            [timeControlSlider.widthAnchor constraintEqualToConstant:200.0].active = YES;
+            [timeControlSlider.heightAnchor constraintEqualToConstant:10.0].active = YES;
+            [timeControlSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
+        }
+        [timeControlSlider addTarget:self action:@selector(setTime) forControlEvents:UIControlEventTouchUpInside];
+        [timeControlSlider setAlpha:[timeControlAlphaValue doubleValue]];
         [timeControlSlider setHidden:YES];
         if (![timeControlSlider isDescendantOfView:[self view]]) [[self view] addSubview:timeControlSlider];
         
-        [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-        [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:145.0].active = YES;
+        if (!customTimeControlPositionAndSizeSwitch) {
+            [timeControlSlider.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [timeControlSlider.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:145.0].active = YES;
+        }
     }
 
     // elapsed time label
-    if (!elapsedTimeLabel) {
+    if (!elapsedTimeLabel && enableTimeControlSection && showElapsedTimeLabelSwitch) {
         elapsedTimeLabel = [[UILabel alloc] init];
         [elapsedTimeLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
-         [elapsedTimeLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+        [elapsedTimeLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
         [elapsedTimeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         [elapsedTimeLabel setTextColor:[UIColor whiteColor]];
         [elapsedTimeLabel setFont:[UIFont systemFontOfSize:15]];
         [elapsedTimeLabel setTextAlignment:NSTextAlignmentRight];
+        [elapsedTimeLabel setAlpha:[timeControlElapsedLabelAlphaValue doubleValue]];
         [elapsedTimeLabel setHidden:YES];
         if (![elapsedTimeLabel isDescendantOfView:[self view]]) [[self view] addSubview:elapsedTimeLabel];
 
@@ -298,14 +303,15 @@ BOOL enableOthersSection;
     }
 
     // duration label
-    if (!durationLabel) {
+    if (!durationLabel && enableTimeControlSection && showDurationTimeLabelSwitch) {
         durationLabel = [[UILabel alloc] init];
         [durationLabel.widthAnchor constraintEqualToConstant:50.0].active = YES;
-         [durationLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
+        [durationLabel.heightAnchor constraintEqualToConstant:21.0].active = YES;
         [durationLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         [durationLabel setTextColor:[UIColor whiteColor]];
         [durationLabel setFont:[UIFont systemFontOfSize:15]];
         [durationLabel setTextAlignment:NSTextAlignmentLeft];
+        [durationLabel setAlpha:[timeControlDurationLabelAlphaValue doubleValue]];
         [durationLabel setHidden:YES];
         if (![durationLabel isDescendantOfView:[self view]]) [[self view] addSubview:durationLabel];
 
@@ -316,24 +322,26 @@ BOOL enableOthersSection;
 }
 
 %new
-- (void)setTime { // set user selected time from slider
+- (void)setTime { // set user selected time
 
     MRMediaRemoteSetElapsedTime([timeControlSlider value]);
 
 }
 
-// %new
-// - (void)updateTimeControl {
+%new
+- (void)updateTimeControl {
 
-//     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) { // update slider and elapsed time label
-//         if (information) {
-//             NSDictionary* dict = (__bridge NSDictionary *)information;
-//             [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]];
-//             [elapsedTimeLabel setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]]];
-//         }
-//     });
+    MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) { // update slider and elapsed time label
+        if (information) {
+            NSDictionary* dict = (__bridge NSDictionary *)information;
+            [timeControlSlider setValue:[[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime]] doubleValue]]; // set slider value
+            int elapsedMinutes = ([[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime] intValue] / 60) % 60;
+            int elapsedSeconds = [[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoElapsedTime] intValue] % 60;
+            [elapsedTimeLabel setText:[NSString stringWithFormat:@"%02d:%02d", elapsedMinutes, elapsedSeconds]]; // set label text
+        }
+    });
 
-// }
+}
 
 %new
 - (void)rewindSong { // rewind song
@@ -537,7 +545,7 @@ BOOL enableOthersSection;
 
 }
 
-- (void)_scrollViewDidEndDecelerating { // fade lobelias in when stopped scrolling
+- (void)_scrollViewDidEndDraggingWithDeceleration:(BOOL)arg1 { // fade lobelias in when stopped scrolling
 
 	%orig;
 
@@ -837,6 +845,7 @@ BOOL enableOthersSection;
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
     [preferences registerBool:&enableBackgroundSection default:nil forKey:@"EnableBackgroundSection"];
     [preferences registerBool:&enableArtworkSection default:nil forKey:@"EnableArtworkSection"];
+    [preferences registerBool:&enableTimeControlSection default:nil forKey:@"EnableTimeControlSection"];
     [preferences registerBool:&enableSongTitleSection default:nil forKey:@"EnableSongTitleSection"];
     [preferences registerBool:&enableArtistNameSection default:nil forKey:@"EnableArtistNameSection"];
     [preferences registerBool:&enableRewindButtonSection default:nil forKey:@"EnableRewindButtonSection"];
@@ -867,6 +876,19 @@ BOOL enableOthersSection;
         [preferences registerBool:&pauseImageLibKittenSwitch default:YES forKey:@"pauseImageLibKitten"];
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
         [preferences registerBool:&artworkHapticFeedbackSwitch default:NO forKey:@"artworkHapticFeedback"];
+    }
+
+    if (enableTimeControlSection) {
+        [preferences registerBool:&customTimeControlPositionAndSizeSwitch default:NO forKey:@"customTimeControlPositionAndSize"];
+        [preferences registerObject:&customTimeControlXAxisValue default:@"0.0" forKey:@"customTimeControlXAxis"];
+        [preferences registerObject:&customTimeControlYAxisValue default:@"0.0" forKey:@"customTimeControlYAxis"];
+        [preferences registerObject:&customTimeControlWidthValue default:@"230.0" forKey:@"customTimeControlWidth"];
+        [preferences registerObject:&customTimeControlHeightValue default:@"230.0" forKey:@"customTimeControlHeight"];
+        [preferences registerBool:&showElapsedTimeLabelSwitch default:YES forKey:@"showElapsedTimeLabel"];
+        [preferences registerBool:&showDurationTimeLabelSwitch default:YES forKey:@"showDurationTimeLabel"];
+        [preferences registerObject:&timeControlAlphaValue default:@"1.0" forKey:@"timeControlAlpha"];
+        [preferences registerObject:&timeControlElapsedLabelAlphaValue default:@"1.0" forKey:@"timeControlElapsedLabelAlpha"];
+        [preferences registerObject:&timeControlDurationLabelAlphaValue default:@"1.0" forKey:@"timeControlDurationLabelAlpha"];
     }
 
     // Song Title
