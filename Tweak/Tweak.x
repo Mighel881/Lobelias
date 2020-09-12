@@ -265,18 +265,25 @@ NextUpViewController* nextUpViewController;
         }
     }
 
-    if (!nextUpViewController && nextUpSupportSwitch && enableOthersSection) {
+    if (!nextUpViewController && nextUpSupportSwitch && enableOthersSection && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/NextUp.dylib"]) {
         nextUpViewController = [[%c(NextUpViewController) alloc] initWithControlCenter:NO defaultStyle:3];
-        [nextUpViewController.view.widthAnchor constraintEqualToConstant:self.view.bounds.size.width - 40].active = YES;
-        [nextUpViewController.view.heightAnchor constraintEqualToConstant:100.0].active = YES;
-        [nextUpViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+        if (customNextUpPositionAndSizeSwitch) {
+            [[nextUpViewController view] setFrame:CGRectMake([customNextUpXAxisValue doubleValue], [customNextUpYAxisValue doubleValue], [customNextUpWidthValue doubleValue], [customNextUpHeightValue doubleValue])];
+        } else {
+            [nextUpViewController.view.widthAnchor constraintEqualToConstant:self.view.bounds.size.width - 40].active = YES;
+            [nextUpViewController.view.heightAnchor constraintEqualToConstant:100.0].active = YES;
+            [nextUpViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+        }
         [self addChildViewController:nextUpViewController];
         [nextUpViewController didMoveToParentViewController:self];
         [[nextUpViewController view] setHidden:YES];
         [[self view] addSubview:[nextUpViewController view]];
         
-        [nextUpViewController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-        [nextUpViewController.view.centerYAnchor constraintEqualToAnchor:artistNameLabel.bottomAnchor constant:65.0].active = YES;
+        if (!customNextUpPositionAndSizeSwitch) {
+            [nextUpViewController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+            [nextUpViewController.view.centerYAnchor constraintEqualToAnchor:artistNameLabel.bottomAnchor constant:65.0].active = YES;
+        }
+
     }
 
 }
@@ -806,8 +813,13 @@ NextUpViewController* nextUpViewController;
     if (enableOthersSection) {
         [preferences registerBool:&fadeWhenNotificationsSwitch default:YES forKey:@"fadeWhenNotifications"];
         [preferences registerObject:&fadeWhenNotificationsAlphaValue default:@"0.2" forKey:@"fadeWhenNotificationsAlpha"];
-        [preferences registerObject:&notificationPositionValue default:@"430.0" forKey:@"notificationPosition"];
+        [preferences registerObject:&notificationPositionValue default:@"455.0" forKey:@"notificationPosition"];
         [preferences registerBool:&nextUpSupportSwitch default:NO forKey:@"nextUpSupport"];
+        [preferences registerBool:&customNextUpPositionAndSizeSwitch default:NO forKey:@"customNextUpPositionAndSize"];
+        [preferences registerObject:&customNextUpXAxisValue default:@"85.0" forKey:@"customNextUpXAxis"];
+        [preferences registerObject:&customNextUpYAxisValue default:@"600.0" forKey:@"customNextUpYAxis"];
+        [preferences registerObject:&customNextUpWidthValue default:@"250.0" forKey:@"customNextUpWidth"];
+        [preferences registerObject:&customNextUpHeightValue default:@"100.0" forKey:@"customNextUpHeight"];
         [preferences registerBool:&roundLockScreenSupportSwitch default:NO forKey:@"roundLockScreenSupport"];
     }
 

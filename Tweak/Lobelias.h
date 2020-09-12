@@ -131,8 +131,13 @@ BOOL skipButtonHapticFeedbackSwitch = NO;
 // Others
 BOOL fadeWhenNotificationsSwitch = YES;
 NSString* fadeWhenNotificationsAlphaValue = @"0.2";
-NSString* notificationPositionValue = @"430.0";
+NSString* notificationPositionValue = @"455.0";
 BOOL nextUpSupportSwitch = NO;
+BOOL customNextUpPositionAndSizeSwitch = NO;
+NSString* customNextUpXAxisValue = @"85.0";
+NSString* customNextUpYAxisValue = @"600.0";
+NSString* customNextUpWidthValue = @"250.0";
+NSString* customNextUpHeightValue = @"100.0";
 BOOL roundLockScreenSupportSwitch = NO;
 
 @interface CSCoverSheetViewController : UIViewController

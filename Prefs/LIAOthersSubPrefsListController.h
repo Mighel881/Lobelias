@@ -16,6 +16,7 @@
 - (void)toggleState;
 - (void)setEnableSwitchState;
 - (void)toggleCellState:(BOOL)enable;
+- (void)setCellsHidden;
 - (void)setCellForRowAtIndexPath:(NSIndexPath *)indexPath enabled:(BOOL)enabled;
 @end
 
