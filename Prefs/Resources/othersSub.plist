@@ -57,10 +57,6 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Notifications Y Position</string>
-			<key>footerText</key>
-			<string>Experimental</string>
-			<key>isStaticText</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>cell</key>

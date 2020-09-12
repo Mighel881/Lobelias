@@ -4,8 +4,8 @@ Depends: mobilesubstrate, preferenceloader, ws.hbang.common (>= 1.14), firmware 
 Version: 1.0
 Architecture: iphoneos-arm
 Description: Design your own lockscreen music player
-Maintainer: alexa
-Author: alexa
+Maintainer: Litten <hiya@litten.love>
+Author: Litten <hiya@litten.love>
 Section: Tweaks
 Depiction: https://repo.litten.love/depictions/lia/index.html
 SileoDepiction: https://repo.litten.love/depictions/lia/lia.json
