@@ -56,7 +56,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Notifications Position</string>
+			<string>Notifications Y Position</string>
 			<key>footerText</key>
 			<string>Experimental</string>
 			<key>isStaticText</key>
@@ -66,7 +66,7 @@
 			<key>cell</key>
 			<string>PSSliderCell</string>
 			<key>default</key>
-			<real>0.0</real>
+			<real>430.0</real>
 			<key>defaults</key>
 			<string>love.litten.lobeliaspreferences</string>
 			<key>key</key>
@@ -74,7 +74,7 @@
 			<key>min</key>
 			<real>0.0</real>
 			<key>max</key>
-			<real>200.0</real>
+			<real>500.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>

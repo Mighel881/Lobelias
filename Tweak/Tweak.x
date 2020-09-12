@@ -450,13 +450,38 @@ BOOL enableOthersSection;
 
 %group LobeliasOthers
 
+%hook CSCombinedListViewController
+
+- (double)_minInsetsToPushDateOffScreen { // lower notifications while playing
+
+    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return %orig;
+    double orig = %orig;
+    float yOffset = [notificationPositionValue doubleValue];
+
+    return orig + yOffset;
+
+}
+
+- (UIEdgeInsets)_listViewDefaultContentInsets { // lower notifications while playing
+
+    if (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused]) return %orig;
+    UIEdgeInsets originalInsets = %orig;
+    float yOffset = [notificationPositionValue doubleValue];
+    originalInsets.top += yOffset;
+    
+    return originalInsets;
+
+}
+
+%end
+
 %hook NCNotificationListView
 
 - (void)_scrollViewWillBeginDragging { // fade lobelias out when scrolling and notifications are presented
 
 	%orig;
 
-    if (!fadeWhenNotificationsSwitch || notificationCount <= 0) return;
+    if (!fadeWhenNotificationsSwitch) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [lsArtworkImage setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
         [songTitleLabel setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
@@ -471,7 +496,7 @@ BOOL enableOthersSection;
 
 	%orig;
 
-    if (!fadeWhenNotificationsSwitch || notificationCount <= 0) return;
+    if (!fadeWhenNotificationsSwitch) return;
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
         [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
@@ -479,98 +504,6 @@ BOOL enableOthersSection;
         [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
         [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
     } completion:nil];
-
-}
-
-%end
-
-%hook NCNotificationListView
-
-- (void)didMoveToWindow { // lower notifications
-
-    %orig;
-
-    if (fadeWhenNotificationsSwitch) {
-        [lsArtworkImage setAlpha:[artworkAlphaValue doubleValue]];
-        [songTitleLabel setAlpha:[songTitleAlphaValue doubleValue]];
-        [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
-        [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
-        [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
-    }
-
-    if ([notificationPositionValue doubleValue] == 0.0) return;
-    [self setFrame:self.frame];
-
-}
-
-- (void)setFrame:(CGRect)frame { // lower notifications
-
-    %orig;
-
-    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
-    CGRect newFrame = frame;
-    newFrame.origin.y += [notificationPositionValue doubleValue];
-    %orig(newFrame);
-
-}
-
-%end
-
-%hook NCNotificationListHeaderTitleView
-
-- (void)didMoveToWindow { // lower notifications header
-
-    %orig;
-
-    if ([notificationPositionValue doubleValue] == 0.0) return;
-    [self setFrame:self.frame];
-
-}
-
-- (void)setFrame:(CGRect)frame { // lower notifications header
-
-    %orig;
-
-    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
-    CGRect newFrame = frame;
-    newFrame.origin.y += [notificationPositionValue doubleValue];
-    %orig(newFrame);
-
-}
-
-%end
-
-%hook NCToggleControl
-
-- (void)didMoveToWindow { // lower notifications control button
-
-    %orig;
-
-    if ([notificationPositionValue doubleValue] == 0.0) return;
-    [self setFrame:self.frame];
-
-}
-
-- (void)setFrame:(CGRect)frame { // lower notifications control button
-
-    %orig;
-
-    if ([notificationPositionValue doubleValue] == 0.0 || (![[%c(SBMediaController) sharedInstance] isPlaying] && ![[%c(SBMediaController) sharedInstance] isPaused])) return;
-    CGRect newFrame = frame;
-    newFrame.origin.y += [notificationPositionValue doubleValue];
-    %orig(newFrame);
-
-}
-
-%end
-
-%hook NCNotificationMasterList
-
-- (unsigned long long)notificationCount { // get notifications count
-
-    if ([notificationPositionValue doubleValue] != 0.0 || fadeWhenNotificationsSwitch) notificationCount = %orig;
-
-    return %orig;
 
 }
 
@@ -861,7 +794,7 @@ BOOL enableOthersSection;
     if (enableOthersSection) {
         [preferences registerBool:&fadeWhenNotificationsSwitch default:YES forKey:@"fadeWhenNotifications"];
         [preferences registerObject:&fadeWhenNotificationsAlphaValue default:@"0.2" forKey:@"fadeWhenNotificationsAlpha"];
-        [preferences registerObject:&notificationPositionValue default:@"0.0" forKey:@"notificationPosition"];
+        [preferences registerObject:&notificationPositionValue default:@"430.0" forKey:@"notificationPosition"];
     }
 
 	if (enabled) {

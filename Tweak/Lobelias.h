@@ -12,8 +12,6 @@ UIColor* backgroundColor;
 UIColor* primaryColor;
 UIColor* secondaryColor;
 
-int notificationCount;
-
 extern BOOL enabled;
 extern BOOL enableBackgroundSection;
 extern BOOL enableArtworkSection;
@@ -133,7 +131,7 @@ BOOL skipButtonHapticFeedbackSwitch = NO;
 // Others
 BOOL fadeWhenNotificationsSwitch = YES;
 NSString* fadeWhenNotificationsAlphaValue = @"0.2";
-NSString* notificationPositionValue = @"0.0";
+NSString* notificationPositionValue = @"430.0";
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)rewindSong;
