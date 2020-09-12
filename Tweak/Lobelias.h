@@ -4,8 +4,6 @@
 #import "libcolorpicker.h"
 #import <Kitten/libKitten.h>
 #import <AudioToolbox/AudioServices.h>
-#define kShowNextUp @"se.nosskirneh.nextup/showNextUp"
-#define kHideNextUp @"se.nosskirneh.nextup/hideNextUp"
 
 HBPreferences* preferences;
 NSDictionary *preferencesDictionary;

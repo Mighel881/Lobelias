@@ -75,7 +75,7 @@ NextUpViewController* nextUpViewController;
 
         if (!customArtworkPositionAndSizeSwitch) {
             [lsArtworkImage.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-            [lsArtworkImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
+            [lsArtworkImage.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-20.0].active = YES;
         }
     }
     
@@ -131,7 +131,7 @@ NextUpViewController* nextUpViewController;
 
         if (!customSongTitlePositionAndSizeSwitch) {
             [songTitleLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-            [songTitleLabel.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:75.0].active = YES;
+            [songTitleLabel.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:55.0].active = YES;
         }
     }
     
@@ -215,7 +215,7 @@ NextUpViewController* nextUpViewController;
 
         if (!customRewindButtonPositionAndSizeSwitch) {
             [rewindButton.centerXAnchor constraintEqualToAnchor:songTitleLabel.leftAnchor constant:-40.0].active = YES;
-            [rewindButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:85.0].active = YES;
+            [rewindButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:65.0].active = YES;
         }
     }
     
@@ -261,7 +261,7 @@ NextUpViewController* nextUpViewController;
 
         if (!customSkipButtonPositionAndSizeSwitch) {
             [skipButton.centerXAnchor constraintEqualToAnchor:songTitleLabel.rightAnchor constant:40.0].active = YES;
-            [skipButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:85.0].active = YES;
+            [skipButton.centerYAnchor constraintEqualToAnchor:lsArtworkImage.bottomAnchor constant:65.0].active = YES;
         }
     }
 
@@ -274,8 +274,9 @@ NextUpViewController* nextUpViewController;
         [nextUpViewController didMoveToParentViewController:self];
         [[nextUpViewController view] setHidden:YES];
         [[self view] addSubview:[nextUpViewController view]];
+        
         [nextUpViewController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-        [nextUpViewController.view.centerYAnchor constraintEqualToAnchor:artistNameLabel.bottomAnchor constant:70.0].active = YES;
+        [nextUpViewController.view.centerYAnchor constraintEqualToAnchor:artistNameLabel.bottomAnchor constant:65.0].active = YES;
     }
 
 }
