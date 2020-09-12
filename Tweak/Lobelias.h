@@ -4,6 +4,8 @@
 #import "libcolorpicker.h"
 #import <Kitten/libKitten.h>
 #import <AudioToolbox/AudioServices.h>
+#define kShowNextUp @"se.nosskirneh.nextup/showNextUp"
+#define kHideNextUp @"se.nosskirneh.nextup/hideNextUp"
 
 HBPreferences* preferences;
 NSDictionary *preferencesDictionary;
@@ -132,6 +134,8 @@ BOOL skipButtonHapticFeedbackSwitch = NO;
 BOOL fadeWhenNotificationsSwitch = YES;
 NSString* fadeWhenNotificationsAlphaValue = @"0.2";
 NSString* notificationPositionValue = @"430.0";
+BOOL nextUpSupportSwitch = NO;
+BOOL roundLockScreenSupportSwitch = NO;
 
 @interface CSCoverSheetViewController : UIViewController
 - (void)rewindSong;
@@ -141,13 +145,8 @@ NSString* notificationPositionValue = @"430.0";
 - (void)toggleRepeat;
 @end
 
-@interface NCNotificationListView : UIScrollView
-@end
-
-@interface NCNotificationListHeaderTitleView : UIView
-@end
-
-@interface NCToggleControl : UIView
+@interface NextUpViewController : UIViewController
+- (id)initWithControlCenter:(BOOL)controlCenter defaultStyle:(long long)style;
 @end
 
 @interface SBMediaController : NSObject

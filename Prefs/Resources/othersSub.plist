@@ -70,11 +70,46 @@
 			<key>min</key>
 			<real>0.0</real>
 			<key>max</key>
-			<real>500.0</real>
+			<real>700.0</real>
 			<key>showValue</key>
 			<true/>
 			<key>isSegmented</key>
 			<false/>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Tweak Support</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>nextUpSupport</string>
+			<key>label</key>
+			<string>NextUp</string>
+			<key>PostNotification</key>
+			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.lobeliaspreferences</string>
+			<key>key</key>
+			<string>roundLockScreenSupport</string>
+			<key>label</key>
+			<string>RoundLockScreen</string>
 			<key>PostNotification</key>
 			<string>love.litten.lobeliaspreferences/ReloadPrefs</string>
 		</dict>

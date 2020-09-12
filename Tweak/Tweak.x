@@ -9,6 +9,8 @@ BOOL enableRewindButtonSection;
 BOOL enableSkipButtonSection;
 BOOL enableOthersSection;
 
+NextUpViewController* nextUpViewController;
+
 %group Lobelias
 
 %hook CSCoverSheetViewController
@@ -263,6 +265,43 @@ BOOL enableOthersSection;
         }
     }
 
+    if (!nextUpViewController && nextUpSupportSwitch && enableOthersSection) {
+        nextUpViewController = [[%c(NextUpViewController) alloc] initWithControlCenter:NO defaultStyle:3];
+        [nextUpViewController.view.widthAnchor constraintEqualToConstant:self.view.bounds.size.width - 40].active = YES;
+        [nextUpViewController.view.heightAnchor constraintEqualToConstant:100.0].active = YES;
+        [nextUpViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self addChildViewController:nextUpViewController];
+        [nextUpViewController didMoveToParentViewController:self];
+        [[nextUpViewController view] setHidden:YES];
+        [[self view] addSubview:[nextUpViewController view]];
+        [nextUpViewController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+        [nextUpViewController.view.centerYAnchor constraintEqualToAnchor:artistNameLabel.bottomAnchor constant:70.0].active = YES;
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenSupportSwitch && enableOthersSection) [[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenSupportSwitch && enableOthersSection) [[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenSupportSwitch && enableOthersSection) [[lsArtworkBackgroundImageView layer] setCornerRadius:0];
+
 }
 
 %new
@@ -488,6 +527,7 @@ BOOL enableOthersSection;
         [artistNameLabel setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
         [rewindButton setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
         [skipButton setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
+        [[nextUpViewController view] setAlpha:[fadeWhenNotificationsAlphaValue doubleValue]];
     } completion:nil];
 
 }
@@ -503,6 +543,7 @@ BOOL enableOthersSection;
         [artistNameLabel setAlpha:[artistNameAlphaValue doubleValue]];
         [rewindButton setAlpha:[rewindButtonAlphaValue doubleValue]];
         [skipButton setAlpha:[skipButtonAlphaValue doubleValue]];
+        [[nextUpViewController view] setAlpha:1.0];
     } completion:nil];
 
 }
@@ -558,6 +599,7 @@ BOOL enableOthersSection;
                     [artistNameLabel setHidden:NO];
                     [rewindButton setHidden:NO];
                     [skipButton setHidden:NO];
+                    [[nextUpViewController view] setHidden:NO];
 
                     // get libKitten colors
                     backgroundColor = [nena backgroundColor:currentArtwork];
@@ -587,6 +629,7 @@ BOOL enableOthersSection;
             [artistNameLabel setHidden:YES];
             [rewindButton setHidden:YES];
             [skipButton setHidden:YES];
+            [[nextUpViewController view] setHidden:YES];
         }
   	});
     
@@ -630,38 +673,6 @@ BOOL enableOthersSection;
 
     [[%c(SBMediaController) sharedInstance] setNowPlayingInfo:0];
     
-}
-
-%end
-
-%end
-
-%group TweakCompatibility
-
-%hook CSCoverSheetViewController
-
-- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	[[lsArtworkBackgroundImageView layer] setCornerRadius:0];
-
 }
 
 %end
@@ -795,13 +806,14 @@ BOOL enableOthersSection;
         [preferences registerBool:&fadeWhenNotificationsSwitch default:YES forKey:@"fadeWhenNotifications"];
         [preferences registerObject:&fadeWhenNotificationsAlphaValue default:@"0.2" forKey:@"fadeWhenNotificationsAlpha"];
         [preferences registerObject:&notificationPositionValue default:@"430.0" forKey:@"notificationPosition"];
+        [preferences registerBool:&nextUpSupportSwitch default:NO forKey:@"nextUpSupport"];
+        [preferences registerBool:&roundLockScreenSupportSwitch default:NO forKey:@"roundLockScreenSupport"];
     }
 
 	if (enabled) {
         %init(Lobelias);
         if (enableOthersSection) %init(LobeliasOthers);
         %init(LobeliasData);
-        if (enableBackgroundSection && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"]) %init(TweakCompatibility);
         return;
     }
 
